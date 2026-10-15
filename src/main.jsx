@@ -50,15 +50,11 @@ function ServiceCard({ item }) {
 function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, className = '' }) {
   const root = useRef(null);
   const pointer = useRef(null);
-  const hasAdvanced = useRef(false);
   const [active, setActive] = useState(0);
   const [desktop, setDesktop] = useState(false);
   const [visible, setVisible] = useState(false);
   const [restart, setRestart] = useState(0);
   const pageCount = items.length;
-  const displayedIndexes = Array.from({ length: desktop ? desktopCount : 1 }, (_, offset) => (active + offset) % pageCount);
-  const wordCount = displayedIndexes.reduce((total, index) => total + items[index].text.split(/\s+/).length, 0);
-  const readingDelay = Math.max(6000, Math.ceil(wordCount / 180 * 60000) + 1500);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const desktopMedia = window.matchMedia('(min-width: 721px)');
@@ -77,18 +73,16 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
     };
   }, []);
   useEffect(() => {
-    if (!visible) { hasAdvanced.current = false; return; }
+    if (!visible) return;
     const timer = window.setTimeout(() => {
       if (!document.hidden && !pointer.current) {
-        hasAdvanced.current = true;
         setActive(index => (index + 1) % pageCount);
       }
       else setRestart(value => value + 1);
-    }, hasAdvanced.current ? Math.max(readingDelay, restart ? 5000 : 0) : 4000);
+    }, 6000);
     return () => window.clearTimeout(timer);
-  }, [visible, active, pageCount, restart, readingDelay]);
+  }, [visible, active, pageCount, restart]);
   function go(direction) {
-    hasAdvanced.current = true;
     setActive(index => (index + direction + pageCount) % pageCount);
     setRestart(value => value + 1);
   }
@@ -121,7 +115,7 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
     </div>
     <div className="carousel-controls">
       <button type="button" onClick={() => go(-1)} aria-label={label + ": Zurück"}><Icon name="left"/></button>
-      <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button key={index} type="button" aria-label={'Ansicht ' + (index + 1)} aria-current={index === active ? 'true' : undefined} onClick={() => { hasAdvanced.current = true; setActive(index); setRestart(value => value + 1); }}><span/></button>)}</div>
+      <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button key={index} type="button" aria-label={'Ansicht ' + (index + 1)} aria-current={index === active ? 'true' : undefined} onClick={() => { setActive(index); setRestart(value => value + 1); }}><span/></button>)}</div>
       <button type="button" onClick={() => go(1)} aria-label={label + ": Weiter"}><Icon name="right"/></button>
     </div>
   </div>;

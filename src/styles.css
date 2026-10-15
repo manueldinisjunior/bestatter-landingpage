@@ -57,20 +57,19 @@ footer .brand-logo { height: 56px; }
 .carousel-viewport { overflow: hidden; border-radius: 6px; }
 .carousel-track { display: flex; transition: transform 550ms cubic-bezier(.22,1,.36,1); will-change: transform; }
 .carousel-slide { flex: 0 0 100%; min-width: 0; }
-.carousel-slide figure { height: 100%; margin: 0; padding: clamp(24px,4vw,40px); }
-.carousel-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.carousel-slide figure { height: 100%; margin: 0; padding: clamp(24px, 3vw, 32px); }
+.carousel-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
 .carousel-controls button { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border: 1px solid #bdcfc5; border-radius: 50%; background: transparent; color: var(--dark); }
 .carousel-controls button:hover { background: #dce7db; }
 .carousel-dots { display: flex; gap: 0; }
 .carousel-dots button { border: 0; min-width: 32px; }
 .carousel-dots span { width: 6px; height: 6px; border-radius: 50%; background: #82998b; transition: width 200ms,background 200ms; }
 .carousel-dots [aria-current="true"] span { width: 20px; border-radius: 8px; background: var(--dark); }
-.carousel-controls .carousel-pause { border-radius: 6px; padding: 0 14px; }
 .carousel-count { margin-left: auto; font-size: 13px; color: #536a62; font-variant-numeric: tabular-nums; }
 @media (prefers-reduced-motion: reduce) { .carousel-track, .carousel-dots span { transition: none; } }
 
 .testimonial-carousel { max-width: none; }
-.testimonial-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; height: 100%; }
+.testimonial-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(16px, 2vw, 24px); height: 100%; }
 .carousel-slide figure { min-width: 0; }
 .menu { width: 44px; height: 44px; padding: 10px; border-radius: 8px; }
 .menu-icon { display: block; }
@@ -260,10 +259,9 @@ html, body { scroll-behavior: auto !important; }
 .testimonial-author small { display: block; color: #63776d; font-size: 11px; font-weight: 400; margin-top: 4px; }
 .testimonial-rating { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-left: 16px; border-left: 1px solid #bdcfc5; }
 .rating-stars { display: inline-flex; gap: 2px; color: #164d41; }
-.rating-value { font-size: 12px; color: #536a62; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .services-section { padding-top: 24px; }
 .services-carousel { margin-top: 28px; }
-.service-card { min-width: 0; height: 100%; padding: clamp(24px, 3vw, 36px); border: 1px solid #dce5dd; border-radius: 6px; text-align: center; }
+.service-card { min-width: 0; height: 100%; padding: clamp(24px, 3vw, 32px); border: 1px solid #dce5dd; border-radius: 6px; text-align: center; }
 .service-card > svg { color: #24574b; margin-bottom: 20px; }
 .service-card h3 { font-size: clamp(19px, 2vw, 23px); margin-bottom: 12px; }
 .service-card p { font-size: 15px; line-height: 1.7; margin-bottom: 0; }
@@ -290,4 +288,23 @@ html, body { scroll-behavior: auto !important; }
 }
 @media(max-width:720px) {
   #ablauf, #leistungen, .quotes.section, #zusammenarbeit, #kontakt > .contact-cta-grid { padding-block: 40px; }
+}
+
+/* Consistent rhythm around carousel headings, cards and controls. */
+#leistungen > h2, .quotes.section > h2 { margin-bottom: 0; }
+#leistungen .services-carousel, .quotes .testimonial-carousel { margin-top: 24px; }
+.carousel-slide blockquote { line-height: 1.7; margin-bottom: 24px; }
+.carousel-slide figcaption { gap: 12px; }
+.quote-mark { margin-bottom: 16px; }
+.carousel-controls { justify-content: center; }
+html { overflow-x: clip; }
+@media(max-width:720px) {
+  #leistungen .services-carousel, .quotes .testimonial-carousel { margin-top: 20px; }
+  .carousel-slide figure, .service-card { padding: 24px; }
+  .carousel-slide blockquote { font-size: 16px; margin-bottom: 20px; }
+  .carousel-controls { margin-top: 20px; gap: 4px; }
+  .carousel-dots button { min-width: 28px; }
+  .testimonial-rating { padding-left: 12px; }
+  .collaboration .features article { gap: 16px; }
+  .contact-cta-grid { gap: 28px; }
 }
