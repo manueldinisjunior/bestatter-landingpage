@@ -175,9 +175,18 @@ function App() {
       setScrolled(hero.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom);
     };
     update();
+    const header = document.querySelector('header');
+    const measureHeader = () => {
+      if (header) document.documentElement.style.setProperty('--header-height', header.getBoundingClientRect().height + 'px');
+    };
+    measureHeader();
+    const headerObserver = new ResizeObserver(measureHeader);
+    if (header) headerObserver.observe(header);
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     return () => {
+      headerObserver.disconnect();
+      document.documentElement.style.removeProperty('--header-height');
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };

@@ -272,3 +272,22 @@ html, body { scroll-behavior: auto !important; }
   .testimonial-pair { grid-template-columns: minmax(0, 1fr); }
   .services-section { padding-top: 16px; }
 }
+
+/* Screen-sized sections account for the actual sticky navigation height. */
+#ablauf, #leistungen, .quotes.section, #zusammenarbeit, #kontakt > .contact-cta-grid {
+  min-height: calc(100svh - var(--header-height, 104px));
+  padding-block: clamp(28px, 5svh, 56px);
+}
+#ablauf, #leistungen, .quotes.section { display: flex; flex-direction: column; justify-content: center; }
+#zusammenarbeit { align-items: center; }
+#kontakt { padding-block: 0; }
+#kontakt > .contact-cta-grid { align-items: center; }
+@media(min-width:721px) and (max-height:800px) {
+  #ablauf .steps { margin-top: 24px; }
+  #ablauf .number { margin-bottom: 16px; }
+  #ablauf .section-action { margin-top: 24px; }
+  .quotes .testimonial-carousel, #leistungen .services-carousel { margin-top: 20px; }
+}
+@media(max-width:720px) {
+  #ablauf, #leistungen, .quotes.section, #zusammenarbeit, #kontakt > .contact-cta-grid { padding-block: 40px; }
+}
