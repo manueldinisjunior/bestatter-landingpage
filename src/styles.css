@@ -43,3 +43,11 @@ footer { gap: 24px; }
   .contact .actions { gap: 12px; }
   footer { gap: 16px 24px; }
 }
+
+.brand { display: inline-flex; align-items: center; flex-shrink: 0; }
+.brand-logo { display: block; width: auto; height: 64px; object-fit: contain; }
+footer .brand-logo { height: 56px; }
+@media (max-width: 720px) {
+  .brand-logo { height: 52px; }
+  footer .brand-logo { height: 48px; }
+}
