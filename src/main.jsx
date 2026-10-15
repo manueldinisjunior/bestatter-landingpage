@@ -6,6 +6,14 @@ import './styles.css';
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo eget magna fermentum iaculis. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
 const exampleNames = ['Anna Müller', 'Thomas Schmidt', 'Sabine Schneider', 'Michael Fischer', 'Claudia Weber', 'Andreas Hoffmann'];
+const exampleTexts = [
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante, etiam sit amet orci eget eros.",
+  "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Mauris sollicitudin fermentum libero. Praesent nonummy mi in odio. Pellentesque auctor neque nec urna, aenean viverra rhoncus pede.",
+  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+  "Curabitur ullamcorper ultricies nisi. Nam eget dui, etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.",
+  "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum, aenean imperdiet.",
+  "Integer tincidunt. Cras dapibus, vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet."
+];
 function Icon({ name, size = 20 }) {
   const paths = {
     arrow: 'M7 17 17 7M7 7h10v10',
@@ -24,7 +32,10 @@ function Testimonials() {
   const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
   const [restart, setRestart] = useState(0);
-  const pageCount = desktop ? 3 : 6;
+  const pageCount = exampleNames.length;
+  const displayedIndexes = Array.from({ length: desktop ? 2 : 1 }, (_, offset) => (active + offset) % pageCount);
+  const wordCount = displayedIndexes.reduce((total, index) => total + exampleTexts[index].split(/\s+/).length, 0);
+  const readingDelay = Math.max(6000, Math.ceil(wordCount / 180 * 60000) + 1500);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const desktopMedia = window.matchMedia('(min-width: 721px)');
@@ -44,17 +55,12 @@ function Testimonials() {
   }, []);
   useEffect(() => {
     if (!visible || paused) return;
-    // A full reading interval begins on entry or after manual navigation.
-    let interval;
-    const advance = () => {
-      if (!document.hidden && !pointer.current) setActive(index => (index + 1) % pageCount);
-    };
     const timer = window.setTimeout(() => {
-      advance();
-      interval = window.setInterval(advance, 4000);
-    }, restart ? 5000 : 4000);
-    return () => { window.clearTimeout(timer); window.clearInterval(interval); };
-  }, [visible, paused, pageCount, restart]);
+      if (!document.hidden && !pointer.current) setActive(index => (index + 1) % pageCount);
+      else setRestart(value => value + 1);
+    }, Math.max(readingDelay, restart ? 5000 : 4000));
+    return () => window.clearTimeout(timer);
+  }, [visible, paused, active, pageCount, restart, readingDelay]);
   function go(direction) {
     setActive(index => (index + direction + pageCount) % pageCount);
     setRestart(value => value + 1);
@@ -79,9 +85,10 @@ function Testimonials() {
       onLostPointerCapture={() => { pointer.current = null; }}>
       <div className="carousel-track" style={{ transform: 'translateX(-' + active * 100 + '%)', transition: reduced ? 'none' : undefined }} aria-live="off">
         {Array.from({ length: pageCount }, (_, page) => <div className="carousel-slide" key={page} aria-hidden={page !== active} role="group" aria-label={(page + 1) + ' von ' + pageCount}>
-          <div className="testimonial-pair">{exampleNames.slice(page * (desktop ? 2 : 1), (page + 1) * (desktop ? 2 : 1)).map(name =>
-            <figure key={name}><span className="quote-mark"><Icon name="quote" size={32}/></span><blockquote>{lorem}</blockquote><figcaption>{name} <span>— Beispiel</span></figcaption></figure>
-          )}</div>
+          <div className="testimonial-pair">{Array.from({ length: desktop ? 2 : 1 }, (_, offset) => {
+            const index = (page + offset) % pageCount;
+            return <figure key={exampleNames[index]}><span className="quote-mark"><Icon name="quote" size={32}/></span><blockquote>{exampleTexts[index]}</blockquote><figcaption>{exampleNames[index]} <span>— Beispiel</span></figcaption></figure>;
+          })}</div>
         </div>)}
       </div>
     </div>
