@@ -51,7 +51,6 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
   const [active, setActive] = useState(0);
   const [desktop, setDesktop] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [restart, setRestart] = useState(0);
   const pageCount = items.length;
   const displayedIndexes = Array.from({ length: desktop ? desktopCount : 1 }, (_, offset) => (active + offset) % pageCount);
@@ -75,13 +74,13 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
     };
   }, []);
   useEffect(() => {
-    if (!visible || paused) return;
+    if (!visible) return;
     const timer = window.setTimeout(() => {
       if (!document.hidden && !pointer.current) setActive(index => (index + 1) % pageCount);
       else setRestart(value => value + 1);
     }, Math.max(readingDelay, restart ? 5000 : 4000));
     return () => window.clearTimeout(timer);
-  }, [visible, paused, active, pageCount, restart, readingDelay]);
+  }, [visible, active, pageCount, restart, readingDelay]);
   function go(direction) {
     setActive(index => (index + direction + pageCount) % pageCount);
     setRestart(value => value + 1);
@@ -117,7 +116,6 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
       <button type="button" onClick={() => go(-1)} aria-label={label + ": Zurück"}><Icon name="left"/></button>
       <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button key={index} type="button" aria-label={'Ansicht ' + (index + 1)} aria-current={index === active ? 'true' : undefined} onClick={() => { setActive(index); setRestart(value => value + 1); }}><span/></button>)}</div>
       <button type="button" onClick={() => go(1)} aria-label={label + ": Weiter"}><Icon name="right"/></button>
-      <button type="button" className="carousel-pause" aria-pressed={paused} onClick={() => setPaused(value => !value)}>{paused ? 'Abspielen' : 'Pause'}</button>
     </div>
   </div>;
 }
