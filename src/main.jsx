@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { flushSync } from 'react-dom';
 import { config } from './config';
 import './styles.css';
 import { Star, StarHalf, Fire, Waves, HandsPraying, UsersThree, ShieldCheck, Leaf, Heart, Handshake, CalendarBlank, Phone, EnvelopeSimple, MapPin, NavigationArrow, ArrowUp, FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
@@ -219,13 +220,19 @@ function App() {
     if (!target) return;
     event.preventDefault();
     cancelAnimationFrame(scrollFrame.current);
-    setMenu(false);
+    // Measure the collapsed header, not the expanded mobile navigation.
+    flushSync(() => setMenu(false));
+    const headerHeight = document.querySelector('header').getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
     scrollFrame.current = requestAnimationFrame(() => {
       const scroller = document.scrollingElement || document.documentElement;
       const start = scroller.scrollTop;
       const frameSection = ['kontakt', 'zusammenarbeit', 'leistungen'].includes(id);
-      const offset = document.querySelector('header').getBoundingClientRect().height + (frameSection ? 0 : 24);
-      const scrollAnchor = id === 'start' || frameSection ? target : target.querySelector('.eyebrow, h2') || target;
+      const mobileCollaboration = id === 'zusammenarbeit' && window.matchMedia('(max-width: 720px)').matches;
+      const offset = document.querySelector('header').getBoundingClientRect().height + (mobileCollaboration ? 40 : frameSection ? 0 : 24);
+      const scrollAnchor = mobileCollaboration
+        ? target.querySelector('.eyebrow') || target
+        : id === 'start' || frameSection ? target : target.querySelector('.eyebrow, h2') || target;
       const end = Math.max(0, Math.min(start + scrollAnchor.getBoundingClientRect().top - offset,
         document.documentElement.scrollHeight - window.innerHeight));
       const distance = end - start;
