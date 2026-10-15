@@ -12,6 +12,7 @@ function Testimonials() {
   const [focused, setFocused] = useState(false);
   const [reduced, setReduced] = useState(true);
   const [ready, setReady] = useState(false);
+  const startedRotation = useRef(false);
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReduced(media.matches);
@@ -24,7 +25,10 @@ function Testimonials() {
   useEffect(() => {
     if (!running) return;
     // Show the first change after the initial three-second introduction.
-    setActive(index => (index + 1) % 4);
+    if (!startedRotation.current) {
+      setActive(index => (index + 1) % 4);
+      startedRotation.current = true;
+    }
     const timer = window.setInterval(() => {
       if (!document.hidden) setActive(index => (index + 1) % 4);
     }, 4000);
