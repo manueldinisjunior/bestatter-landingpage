@@ -150,10 +150,19 @@ function SiteFooter() {
 function App() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 24);
+    const update = () => {
+      const hero = document.getElementById('start');
+      const header = document.querySelector('header');
+      if (!hero || !header) return;
+      setScrolled(hero.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom);
+    };
     update();
     window.addEventListener('scroll', update, { passive: true });
-    return () => window.removeEventListener('scroll', update);
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, []);
   const [menu, setMenu] = useState(false);
   const [notice, setNotice] = useState('');
