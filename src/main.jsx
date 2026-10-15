@@ -45,10 +45,15 @@ function Testimonials() {
   useEffect(() => {
     if (!visible || paused) return;
     // A full reading interval begins on entry or after manual navigation.
-    const timer = window.setInterval(() => {
+    let interval;
+    const advance = () => {
       if (!document.hidden && !pointer.current) setActive(index => (index + 1) % pageCount);
+    };
+    const timer = window.setTimeout(() => {
+      advance();
+      interval = window.setInterval(advance, 4000);
     }, restart ? 5000 : 4000);
-    return () => window.clearInterval(timer);
+    return () => { window.clearTimeout(timer); window.clearInterval(interval); };
   }, [visible, paused, pageCount, restart]);
   function go(direction) {
     setActive(index => (index + direction + pageCount) % pageCount);
