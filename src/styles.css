@@ -175,7 +175,9 @@ html, body { scroll-behavior: auto !important; }
 .footer-social h3 { font-size: 18px; margin-bottom: 16px; }
 .social-links { display: flex; gap: 12px; }
 .social-links button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; background: transparent; border: 1px solid #9ab6aa; border-radius: 6px; color: #164d41; transition: background 160ms ease; }
-.social-links button:hover { background: #e4f5ef; }
+.social-links button:hover,
+.back-to-top:hover svg { background: #e4f5ef; }
+.back-to-top:hover { text-decoration: none; }
 .footer-status { max-width: 48ch; font-size: 12px; margin: 12px 0 0; }
 .footer-status:empty { display: none; }
 .footer-bottom { border-top: 1px solid #c9d5ce; padding-top: 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 20px 28px; }
@@ -184,7 +186,7 @@ html, body { scroll-behavior: auto !important; }
 .footer-link { font: inherit; border: 0; padding: 0; background: transparent; color: inherit; }
 .footer-link:hover { text-decoration: underline; }
 .back-to-top { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 14px; }
-.back-to-top svg { width: 36px; height: 36px; padding: 8px; border: 1px solid #9ab6aa; border-radius: 5px; }
+.back-to-top svg { transition: background .2s; width: 36px; height: 36px; padding: 8px; border: 1px solid #9ab6aa; border-radius: 5px; }
 @media(max-width:900px) { .contact-cta-grid { grid-template-columns: .85fr 1.15fr; gap: 28px; } .location-grid { gap: 28px; } .location-details { padding-left: 24px; } }
 @media(max-width:720px) {
   .contact-cta-grid, .location-grid { grid-template-columns: 1fr; }
@@ -321,3 +323,6 @@ h1, h2, h3 { font-weight: 600; }
 .trust-benefits > span { font-size: 16px; }
 .footer-bottom p, .footer-bottom nav { font-size: 14px; }
 @media(max-width:480px) { .trust-benefits > span { font-size: 14px; } }
+
+/* Uppercase condensed lettering follows the supplied wordmark. */
+header nav a { text-transform: uppercase; letter-spacing: .3px; }
