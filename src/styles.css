@@ -79,3 +79,12 @@ footer .brand-logo { height: 56px; }
 .menu[aria-expanded="true"] .menu-line-bottom { transform: translateY(-5px) rotate(-45deg); transform-origin: 12px 17px; }
 @media (max-width: 720px) { .testimonial-pair { grid-template-columns: minmax(0,1fr); gap: 16px; } }
 @media (prefers-reduced-motion: reduce) { .menu-icon path { transition: none; } }
+
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+.button svg { flex-shrink: 0; }
+.quote-mark { display: block; margin-bottom: 20px; line-height: 1; }
+.art-caption > span { display: flex; align-items: center; }
+footer > a:last-child { display: inline-flex; align-items: center; gap: 8px; }
+.menu { color: #00a98e; border-color: #00a98e; background: transparent; }
+.menu:hover, .menu[aria-expanded="true"] { background: #e4f5ef; }
+.menu:focus-visible { outline-color: #164d41; }
