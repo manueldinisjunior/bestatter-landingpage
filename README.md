@@ -1,54 +1,29 @@
 # Bestatter Landingpage
 
-Responsive Onepager für ein Bestattungsunternehmen, erstellt als Arbeitsprobe nach dem Briefing von AlsterCloud. Ziel ist die Kontaktaufnahme per Telefon, Terminanfrage oder Nachricht.
+Responsive Landingpage für ein Bestattungsunternehmen, erstellt als Arbeitsprobe nach dem Briefing von AlsterCloud. Besucher können sich über Leistungen informieren und Kontakt aufnehmen.
 
 [Live-Demo](https://manueldinisjunior.github.io/bestatter-landingpage/)
 
-## Designanforderungen
+## Design
 
-- Corporate Color: `#00a98e`
-- Schriftarten: Cormorant Garamond für Überschriften und Fließtext, Bebas Neue für Navigation und Buttons
-- Bereitgestelltes AlsterCloud-Logo
-- Ruhige Gestaltung mit klarer Struktur und großzügigen Abständen
+- Ruhige Gestaltung mit Grün als Markenfarbe (`#00a98e`)
+- Cormorant Garamond für Überschriften und Fließtext, Bebas Neue für Navigation und Buttons
+- Bereitgestelltes AlsterCloud-Logo und KI-generierte Illustrationen
 - Responsive Darstellung für Desktop, Tablet und Smartphone
-- Lorem Ipsum für längere Texte und beispielhafte Kundenstimmen
 
 ## Funktionen
 
 - Sticky Navigation mit animiertem Scrollen
-- Testimonials mit beispielhaften Sternebewertungen, automatischem Wechsel, Pfeilen und Wischgesten
-- Leistungen als Karussell: drei Karten auf dem Desktop, eine auf dem Smartphone
-- Kontaktformular mit Auswahl typischer Bestattungsleistungen
-- Terminbuchung über Calendly vorgesehen
-- Telefon- und E-Mail-Kontakt
-- Illustrative Standortkarte und Zurück-nach-oben-Button
+- Leistungs- und Kundenstimmen-Karussells mit automatischem Wechsel, Pfeilen und Wischgesten
+- Kontaktformular mit Auswahl der gewünschten Leistung
+- Telefon- und E-Mail-Kontakt sowie Terminbuchung über Calendly vorgesehen
+- Standortkarte, Google-Maps-Routenlink und Zurück-nach-oben-Button
 
-Über das Kontaktformular sollen Besucher Dienstleistungen anfragen oder weitere Informationen erhalten können. Dazu wählen sie ein Anliegen aus und geben ihre Kontaktdaten sowie eine Nachricht ein.
-
-Der Button „Termin vereinbaren“ ist für die Terminbuchung über Calendly vorgesehen. Besucher sollen dort einen freien Termin für ein persönliches Gespräch auswählen und buchen können.
-
-In dieser Arbeitsprobe wird die Nachricht zum Versand im E-Mail-Programm vorbereitet. Eine direkte Übermittlung über das Formular ist noch nicht eingerichtet.
-
-Telefon und Calendly-Link werden in `src/config.js` konfiguriert. Der Calendly-Link ist derzeit noch nicht hinterlegt. Rechtliche Links sind Platzhalter; Kundenstimmen sind Beispiele. „Route planen“ öffnet Google Maps mit der angezeigten Adresse.
-
-## Projektplanung
-
-Die sechs Planungsdokumente beschreiben den aktuellen Stand, Abnahmekriterien und offene Aufgaben:
-
-1. [Produktanforderungen](docs/01-produktanforderungen.md)
-2. [Technische Anforderungen](docs/02-technische-anforderungen.md)
-3. [App Flow](docs/03-app-flow.md)
-4. [Design Brief](docs/04-design-brief.md)
-5. [Datenschema und Datenfluss](docs/05-datenschema.md)
-6. [Implementierungsplan und Abnahme](docs/06-implementierungsplan.md)
+**Stand der Arbeitsprobe:** Das Formular bereitet eine Nachricht im E-Mail-Programm vor; direkter Versand und Calendly sind noch nicht eingerichtet. Rechtliche Links und Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen dienen als Beispiele.
 
 ## Tech Stack
 
-- React – Komponenten und Interaktionen
-- Vite – Entwicklung und Produktionsbuild
-- CSS – Layout, responsive Darstellung und Animationen
-- Phosphor Icons – Icons
-- GitHub Actions und GitHub Pages – Build und Hosting
+React · Vite · CSS · Phosphor Icons · GitHub Actions · GitHub Pages
 
 ## Lokal starten
 
@@ -59,18 +34,13 @@ npm install
 npm run dev
 ```
 
-Produktionsbuild und lokale Vorschau:
+Mit `npm run build` wird die Produktionsversion erstellt; `npm run preview` startet die lokale Vorschau.
 
-```bash
-npm run build
-npm run preview
-```
-
-Änderungen auf `main` werden über GitHub Actions für GitHub Pages gebaut und veröffentlicht.
+[Kurzer Projektüberblick](docs/projektbrief.md)
 
 ## Bildnachweise
 
-Die KI-generierten Illustrationen ergänzen das bereitgestellte AlsterCloud-Logo.
+Die Illustrationen wurden mit KI generiert. Das AlsterCloud-Logo wurde bereitgestellt.
 
 ## Lizenz
 
