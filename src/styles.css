@@ -312,7 +312,7 @@ html { overflow-x: clip; }
 }
 
 /* Cormorant for reading; Bebas Neue for concise navigation and actions. */
-header nav, .button, .eyebrow { font-family: 'Bebas Neue', sans-serif; font-weight: 400; }
+header nav, .button, .eyebrow { font-family: 'Bebas Neue', sans-serif; font-weight: 355; }
 header nav, .button { font-size: 18px; letter-spacing: .6px; }
 .eyebrow { font-size: 14px; letter-spacing: 2px; }
 h1, h2, h3 { font-weight: 600; }
@@ -326,4 +326,4 @@ h1, h2, h3 { font-weight: 600; }
 
 /* Uppercase condensed lettering follows the supplied wordmark. */
 header nav a { text-transform: uppercase; letter-spacing: 0; }
-header nav a:not(.button) { font-size: 20px; font-weight: 400; line-height: 1.2; }
+header nav a:not(.button) { font-size: 20px; font-weight: 355; line-height: 1.2; }
