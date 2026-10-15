@@ -1003,7 +1003,7 @@ body {
     gap: 20px;
   }
   .footer-top {
-    align-items: flex-start;
+    align-items: flex-end;
     flex-wrap: wrap;
     gap: 24px;
   }
