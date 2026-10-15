@@ -223,8 +223,9 @@ function App() {
     scrollFrame.current = requestAnimationFrame(() => {
       const scroller = document.scrollingElement || document.documentElement;
       const start = scroller.scrollTop;
-      const offset = document.querySelector('header').getBoundingClientRect().height + 24;
-      const scrollAnchor = id === 'start' ? target : target.querySelector('.eyebrow, h2') || target;
+      const frameSection = ['kontakt', 'zusammenarbeit', 'leistungen'].includes(id);
+      const offset = document.querySelector('header').getBoundingClientRect().height + (frameSection ? 0 : 24);
+      const scrollAnchor = id === 'start' || frameSection ? target : target.querySelector('.eyebrow, h2') || target;
       const end = Math.max(0, Math.min(start + scrollAnchor.getBoundingClientRect().top - offset,
         document.documentElement.scrollHeight - window.innerHeight));
       const distance = end - start;
@@ -260,7 +261,9 @@ function App() {
     setNotice(type === 'phone' ? 'Die Telefonnummer wird für die finale Version ergänzt.' : 'Der Calendly-Link wird für die finale Version ergänzt.');
     dialog.current.showModal();
   }
-  const CTA = ({ secondary = false }) => <button className={secondary ? 'button secondary' : 'button'} onClick={() => contact(secondary ? 'phone' : 'booking')}>{secondary ? 'Jetzt anrufen' : 'Termin vereinbaren'}<Icon name="arrow" size={18}/></button>;
+  const CTA = ({ secondary = false }) => secondary
+    ? <button type="button" className="button secondary" onClick={() => contact('phone')}>Jetzt anrufen<Icon name="arrow" size={18}/></button>
+    : <a className="button" href="#kontakt">Termin vereinbaren<Icon name="arrow" size={18}/></a>;
   function handleAnchorClick(event) {
     const anchor = event.target.closest('a[href^="#"]');
     if (!anchor || anchor.classList.contains('skip')) return;
