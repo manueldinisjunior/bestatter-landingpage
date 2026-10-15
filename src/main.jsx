@@ -7,6 +7,15 @@ const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer 
 
 function Testimonials() {
   const [active, setActive] = useState(0);
+  const [desktop, setDesktop] = useState(false);
+  const pageCount = desktop ? 2 : 4;
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 721px)');
+    const update = () => { setDesktop(media.matches); setActive(0); };
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -26,30 +35,33 @@ function Testimonials() {
     if (!running) return;
     // Show the first change after the initial three-second introduction.
     if (!startedRotation.current) {
-      setActive(index => (index + 1) % 4);
+      setActive(index => (index + 1) % pageCount);
       startedRotation.current = true;
     }
     const timer = window.setInterval(() => {
-      if (!document.hidden) setActive(index => (index + 1) % 4);
+      if (!document.hidden) setActive(index => (index + 1) % pageCount);
     }, 4000);
     return () => window.clearInterval(timer);
-  }, [running]);
+  }, [running, pageCount]);
   return <div className="testimonial-carousel" role="region" aria-roledescription="Karussell" aria-label="Kundenstimmen – vier Platzhalter"
     onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
     onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
     <div className="carousel-viewport">
       <div className="carousel-track" style={{ transform: 'translateX(-' + active * 100 + '%)' }} aria-live="off">
-        {[1, 2, 3, 4].map((number, index) => <div className="carousel-slide" key={number} role="group" aria-roledescription="Folie" aria-label={number + ' von 4'} aria-hidden={index !== active}>
-          <figure><span className="quote-mark" aria-hidden="true">“</span><blockquote>{lorem}</blockquote><figcaption>Lorem Ipsum {number} <span>— Platzhalter</span></figcaption></figure>
+        {Array.from({ length: pageCount }, (_, page) => <div className="carousel-slide" key={page} role="group" aria-roledescription="Folie" aria-label={(page + 1) + ' von ' + pageCount} aria-hidden={page !== active}>
+          <div className="testimonial-pair">{Array.from({ length: desktop ? 2 : 1 }, (_, position) => {
+            const number = page * (desktop ? 2 : 1) + position + 1;
+            return <figure key={number}><span className="quote-mark" aria-hidden="true">“</span><blockquote>{lorem}</blockquote><figcaption>Lorem Ipsum {number} <span>— Platzhalter</span></figcaption></figure>;
+          })}</div>
         </div>)}
       </div>
     </div>
     <div className="carousel-controls">
-      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + 3) % 4); }} aria-label="Vorherige Kundenstimme">←</button>
-      <div className="carousel-dots">{[0,1,2,3].map(index => <button type="button" key={index} aria-label={'Kundenstimme ' + (index + 1)} aria-current={active === index ? 'true' : undefined} onClick={() => { setPaused(true); setActive(index); }}><span/></button>)}</div>
-      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + 1) % 4); }} aria-label="Nächste Kundenstimme">→</button>
+      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + pageCount - 1) % pageCount); }} aria-label="Vorherige Kundenstimme">←</button>
+      <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button type="button" key={index} aria-label={'Kundenstimme ' + (index + 1)} aria-current={active === index ? 'true' : undefined} onClick={() => { setPaused(true); setActive(index); }}><span/></button>)}</div>
+      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + 1) % pageCount); }} aria-label="Nächste Kundenstimme">→</button>
       {!reduced && <button type="button" className="carousel-pause" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Automatischen Wechsel starten' : 'Automatischen Wechsel pausieren'}>{paused ? 'Abspielen' : 'Pause'}</button>}
-      <span className="carousel-count" role="status" aria-live={running ? 'off' : 'polite'}>{active + 1} / 4</span>
+      <span className="carousel-count" role="status" aria-live={running ? 'off' : 'polite'}>{active + 1} / {pageCount}</span>
     </div>
   </div>;
 }
@@ -126,7 +138,11 @@ function App() {
   return <>
     <a className="skip" href="#main">Zum Inhalt</a>
     <header><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
-      <button className="menu" aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>Menü {menu ? '−' : '+'}</button>
+      <button className="menu" aria-label={menu ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>
+        <svg className="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+          <path className="menu-line-top" d="M4 7h16"/><path className="menu-line-middle" d="M4 12h16"/><path className="menu-line-bottom" d="M4 17h16"/>
+        </svg>
+      </button>
       <nav id="navigation" className={menu ? 'open' : ''} aria-label="Hauptnavigation">{[['ablauf','Ablauf'],['zusammenarbeit','Zusammenarbeit'],['kontakt','Kontakt']].map(([id, label]) => <a key={id} href={'#'+id} onClick={(event) => navigate(event, id)}>{label}</a>)}<CTA /></nav>
     </header>
     <main id="main">
