@@ -31,7 +31,9 @@ const services = [
   { title: 'Erdbestattung', Icon: Leaf, text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae sapien ut libero venenatis faucibus.' },
   { title: 'Feuerbestattung', Icon: Fire, text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.' },
   { title: 'Seebestattung', Icon: Waves, text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
-  { title: 'Bestattungsvorsorge', Icon: HandsPraying, text: 'Curabitur ullamcorper ultricies nisi. Nam eget dui, etiam rhoncus. Maecenas tempus, tellus eget condimentum.' }
+  { title: 'Bestattungsvorsorge', Icon: HandsPraying, text: 'Curabitur ullamcorper ultricies nisi. Nam eget dui, etiam rhoncus. Maecenas tempus, tellus eget condimentum.' },
+  { title: 'Trauerfeier', Icon: Heart, text: 'Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.' },
+  { title: 'Allgemeine Beratung', Icon: Handshake, text: 'Integer tincidunt. Cras dapibus, vivamus elementum semper nisi. Aenean vulputate eleifend tellus.' }
 ];
 function Rating({ value }) {
   return <span className="testimonial-rating" role="img" aria-label={'Beispielbewertung: ' + String(value).replace('.', ',') + ' von 5 Sternen'}>
@@ -48,6 +50,7 @@ function ServiceCard({ item }) {
 function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, className = '' }) {
   const root = useRef(null);
   const pointer = useRef(null);
+  const hasAdvanced = useRef(false);
   const [active, setActive] = useState(0);
   const [desktop, setDesktop] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -74,14 +77,18 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
     };
   }, []);
   useEffect(() => {
-    if (!visible) return;
+    if (!visible) { hasAdvanced.current = false; return; }
     const timer = window.setTimeout(() => {
-      if (!document.hidden && !pointer.current) setActive(index => (index + 1) % pageCount);
+      if (!document.hidden && !pointer.current) {
+        hasAdvanced.current = true;
+        setActive(index => (index + 1) % pageCount);
+      }
       else setRestart(value => value + 1);
-    }, Math.max(readingDelay, restart ? 5000 : 4000));
+    }, hasAdvanced.current ? Math.max(readingDelay, restart ? 5000 : 0) : 4000);
     return () => window.clearTimeout(timer);
   }, [visible, active, pageCount, restart, readingDelay]);
   function go(direction) {
+    hasAdvanced.current = true;
     setActive(index => (index + direction + pageCount) % pageCount);
     setRestart(value => value + 1);
   }
@@ -114,14 +121,14 @@ function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, cla
     </div>
     <div className="carousel-controls">
       <button type="button" onClick={() => go(-1)} aria-label={label + ": Zurück"}><Icon name="left"/></button>
-      <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button key={index} type="button" aria-label={'Ansicht ' + (index + 1)} aria-current={index === active ? 'true' : undefined} onClick={() => { setActive(index); setRestart(value => value + 1); }}><span/></button>)}</div>
+      <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button key={index} type="button" aria-label={'Ansicht ' + (index + 1)} aria-current={index === active ? 'true' : undefined} onClick={() => { hasAdvanced.current = true; setActive(index); setRestart(value => value + 1); }}><span/></button>)}</div>
       <button type="button" onClick={() => go(1)} aria-label={label + ": Weiter"}><Icon name="right"/></button>
     </div>
   </div>;
 }
 
 
-const funeralServices = ['Erdbestattung', 'Feuerbestattung', 'Seebestattung', 'Bestattungsvorsorge', 'Trauerfeier', 'Allgemeine Beratung'];
+const funeralServices = services.map(service => service.title);
 function ContactForm() {
   const [status, setStatus] = useState('');
   function submit(event) {
