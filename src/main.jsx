@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { config } from './config';
 import './styles.css';
@@ -9,6 +9,56 @@ function App() {
   const [notice, setNotice] = useState('');
   const dialog = useRef(null);
   const previousFocus = useRef(null);
+
+  const scrollFrame = useRef(0);
+  useEffect(() => {
+    const cancel = () => cancelAnimationFrame(scrollFrame.current);
+    const cancelOnKey = (event) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) cancel();
+    };
+    window.addEventListener('wheel', cancel, { passive: true });
+    window.addEventListener('touchstart', cancel, { passive: true });
+    window.addEventListener('keydown', cancelOnKey);
+    return () => {
+      cancel();
+      window.removeEventListener('wheel', cancel);
+      window.removeEventListener('touchstart', cancel);
+      window.removeEventListener('keydown', cancelOnKey);
+    };
+  }, []);
+  function navigate(event, id) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    const target = document.getElementById(id);
+    if (!target) return;
+    event.preventDefault();
+    cancelAnimationFrame(scrollFrame.current);
+    setMenu(false);
+    scrollFrame.current = requestAnimationFrame(() => {
+      const start = window.scrollY;
+      const offset = document.querySelector('header').getBoundingClientRect().height + 24;
+      const end = Math.max(0, Math.min(start + target.getBoundingClientRect().top - offset,
+        document.documentElement.scrollHeight - window.innerHeight));
+      const distance = end - start;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const duration = reduced ? 0 : Math.min(700, Math.max(400, Math.abs(distance) * 0.35));
+      let started;
+      function finish() {
+        if (window.location.hash !== '#' + id) window.history.pushState(null, '', '#' + id);
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }
+      function step(time) {
+        started ??= time;
+        const progress = duration ? Math.min((time - started) / duration, 1) : 1;
+        const eased = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo({ top: start + distance * eased, behavior: 'instant' });
+        if (progress < 1) scrollFrame.current = requestAnimationFrame(step);
+        else finish();
+      }
+      scrollFrame.current = requestAnimationFrame(step);
+    });
+  }
+
   function contact(type) {
     const target = type === 'phone' ? config.phone : config.calendly;
     if (target) {
@@ -25,7 +75,7 @@ function App() {
     <a className="skip" href="#main">Zum Inhalt</a>
     <header><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
       <button className="menu" aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>Menü {menu ? '−' : '+'}</button>
-      <nav id="navigation" className={menu ? 'open' : ''} aria-label="Hauptnavigation">{[['ablauf','Ablauf'],['zusammenarbeit','Zusammenarbeit'],['kontakt','Kontakt']].map(([id, label]) => <a key={id} href={'#'+id} onClick={() => setMenu(false)}>{label}</a>)}<CTA /></nav>
+      <nav id="navigation" className={menu ? 'open' : ''} aria-label="Hauptnavigation">{[['ablauf','Ablauf'],['zusammenarbeit','Zusammenarbeit'],['kontakt','Kontakt']].map(([id, label]) => <a key={id} href={'#'+id} onClick={(event) => navigate(event, id)}>{label}</a>)}<CTA /></nav>
     </header>
     <main id="main">
       <section className="hero section" id="start"><div><p className="eyebrow">BESTATTUNG & VORSORGE</p><h1>In schweren Zeiten.<br/><span>An Ihrer Seite.</span></h1><p className="lead">{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p className="fine">Bestattung · Vorsorge · Persönliches Gespräch</p></div><div className="hero-art"><img src="./placeholder.svg" width="600" height="660" alt="" fetchPriority="high"/><div className="art-caption"><span aria-hidden="true">✳</span><p>Raum für Abschied.<br/><strong>Zeit für Erinnerung.</strong></p></div></div></section>
