@@ -122,30 +122,28 @@ function ContactForm() {
       <label>Wobei dürfen wir Sie unterstützen? <span aria-hidden="true">*</span><select name="service" required defaultValue=""><option value="" disabled>Bitte wählen</option>{funeralServices.map(service => <option key={service}>{service}</option>)}</select></label>
       <label className="full-field">Ihre Nachricht <span aria-hidden="true">*</span><textarea name="message" required rows={4} minLength={10} maxLength={4000} placeholder="Ihre Nachricht an uns …"/></label>
     </div>
-    <label className="privacy-check"><input type="checkbox" required/><span>Ich habe die <a href="https://www.alstercloud.de/datenschutz/" target="_blank" rel="noreferrer">Datenschutzerklärung</a> gelesen.</span></label>
+    <label className="privacy-check"><input type="checkbox" required/><span>Ich habe die <a href="#" onClick={event => event.preventDefault()}>Datenschutzerklärung</a> gelesen.</span></label>
     <button type="submit" className="button">Nachricht senden <Icon name="arrow" size={18}/></button>
     <p className="form-note">Öffnet Ihr E-Mail-Programm. Mit * markierte Felder sind Pflichtfelder.</p>
     <p className="form-status" role="status">{status}</p>
   </form>;
 }
 function LocationSection() {
-  const [mapVisible, setMapVisible] = useState(false);
-  const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=AlsterCloud+Winterhuder+Weg+31+22085+Hamburg';
   return <section className="location-section section" id="standort" aria-labelledby="location-title">
     <p className="eyebrow">05 / STANDORT</p><h2 id="location-title">Hier finden Sie uns</h2>
     <div className="location-grid">
-      <div className="location-map">{mapVisible ? <iframe title="Karte: Winterhuder Weg 31, Hamburg" src="https://maps.google.com/maps?q=AlsterCloud%20Winterhuder%20Weg%2031%2022085%20Hamburg&z=15&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/> : <div className="map-consent"><MapPin size={36} weight="light" aria-hidden="true"/><h3>Unser Standort in Hamburg</h3><p>Winterhuder Weg 31, 22085 Hamburg</p><button className="button" onClick={() => setMapVisible(true)}>Google Maps laden</button><p className="map-notice">Beim Laden der Karte wird eine Verbindung zu Google hergestellt.</p><a href={mapsUrl} target="_blank" rel="noreferrer">Direkt in Google Maps öffnen</a></div>}</div>
-      <div className="location-details"><h3>Bestatter</h3><address><div><MapPin size={24} aria-hidden="true"/><span>Winterhuder Weg 31<br/>22085 Hamburg</span></div><a href="tel:+494060943946"><Phone size={24} aria-hidden="true"/>040 60 94 39 46</a><a href="mailto:mail@alstercloud.de"><EnvelopeSimple size={24} aria-hidden="true"/>mail@alstercloud.de</a></address><a className="button secondary" href={mapsUrl} target="_blank" rel="noreferrer"><NavigationArrow size={20} aria-hidden="true"/>Route planen <Icon name="arrow" size={18}/></a></div>
+      <div className="location-map"><img className="location-map-image" src="./hamburg-map.png" alt="Karte des Standorts am Winterhuder Weg 31 in Hamburg" width="730" height="570" loading="lazy"/></div>
+      <div className="location-details"><h3>Bestatter</h3><address><div><MapPin size={24} aria-hidden="true"/><span>Winterhuder Weg 31<br/>22085 Hamburg</span></div><a href="tel:+494060943946"><Phone size={24} aria-hidden="true"/>040 60 94 39 46</a><a href="mailto:mail@alstercloud.de"><EnvelopeSimple size={24} aria-hidden="true"/>mail@alstercloud.de</a></address><a className="button secondary" href="#" onClick={event => event.preventDefault()}><NavigationArrow size={20} aria-hidden="true"/>Route planen <Icon name="arrow" size={18}/></a></div>
     </div>
   </section>;
 }
 function SiteFooter() {
   const [notice, setNotice] = useState('');
   return <footer className="site-footer">
-    <div className="footer-top"><a className="brand footer-brand" href="#start" aria-label="Bestatter – Startseite"><img className="brand-symbol" src="./favicon.svg" alt="" width="56" height="56"/><span>BESTATTER</span></a>
+    <div className="footer-top"><a className="brand footer-brand" href="#start" aria-label="Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841" loading="lazy"/></a>
       <div className="footer-social"><h3>Folgen Sie uns</h3><div className="social-links">{[['Facebook', FacebookLogo], ['Instagram', InstagramLogo], ['LinkedIn', LinkedinLogo]].map(([label, SocialIcon]) => <button key={label} type="button" aria-label={label} onClick={() => setNotice('Der ' + label + '-Link wird für die finale Version ergänzt.')}><SocialIcon size={23} weight="regular" aria-hidden="true"/></button>)}</div><p className="footer-status" role="status">{notice}</p></div>
     </div>
-    <div className="footer-bottom"><p>Bestatter © 2026 Alle Rechte vorbehalten.</p><nav aria-label="Footer"><a href="https://www.alstercloud.de/impressum/" target="_blank" rel="noreferrer">Impressum</a><a href="https://www.alstercloud.de/datenschutz/" target="_blank" rel="noreferrer">Datenschutz &amp; Cookies</a><button type="button" className="footer-link" onClick={() => setNotice('Bildnachweise: AlsterCloud-Logo bereitgestellt durch AlsterCloud. Landschaftsgrafik: projektinterner Platzhalter. Kartenmaterial bei Aktivierung: Google Maps.')}>Bildnachweise</button><a href="#kontakt">Kontakt</a></nav><a className="back-to-top" href="#start" aria-label="Zur Startsektion"><ArrowUp size={20} aria-hidden="true"/><span>Nach oben</span></a></div>
+    <div className="footer-bottom"><p>Bestatter © 2026 Alle Rechte vorbehalten.</p><nav aria-label="Footer"><a href="#" onClick={event => event.preventDefault()}>Impressum</a><a href="#" onClick={event => event.preventDefault()}>Datenschutz &amp; Cookies</a><button type="button" className="footer-link" onClick={() => setNotice('Bildnachweise: AlsterCloud-Logo bereitgestellt durch AlsterCloud. Landschaftsgrafik: projektinterner Platzhalter. Statische Kartenabbildung: Google Maps, siehe Quellenangaben im Bild.')}>Bildnachweise</button><a href="#kontakt">Kontakt</a></nav><a className="back-to-top" href="#start" aria-label="Zur Startsektion"><ArrowUp size={20} aria-hidden="true"/><span>Nach oben</span></a></div>
   </footer>;
 }
 
@@ -233,7 +231,7 @@ function App() {
   }
   return <div onClickCapture={handleAnchorClick}>
     <a className="skip" href="#main">Zum Inhalt</a>
-    <header className={scrolled ? 'is-scrolled' : undefined}><a className="brand" href="#start" aria-label="Bestatter – Startseite"><img className="brand-symbol" src="./favicon.svg" alt="" width="48" height="48"/><span>BESTATTER</span></a>
+    <header className={scrolled ? 'is-scrolled' : undefined}><a className="brand" href="#start" aria-label="Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
       <button className="menu" aria-label={menu ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>
         <svg className="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
           <path className="menu-line-top" d="M4 7h16"/><path className="menu-line-middle" d="M4 12h16"/><path className="menu-line-bottom" d="M4 17h16"/>

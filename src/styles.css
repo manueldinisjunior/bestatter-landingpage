@@ -202,3 +202,6 @@ html, body { scroll-behavior: auto !important; }
   .footer-bottom .back-to-top { margin-left: auto; }
   .brand-symbol { width: 40px; height: 40px; }
 }
+
+.location-map-image { display: block; width: 100%; height: 100%; min-height: 390px; object-fit: cover; }
+@media(max-width:720px) { .location-map-image { height: auto; min-height: 0; object-fit: contain; } }
