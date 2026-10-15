@@ -18,10 +18,15 @@ Responsive Onepager für ein Bestattungsunternehmen, erstellt als Arbeitsprobe n
 - Sticky Navigation mit animiertem Scrollen
 - Testimonials mit automatischem Wechsel, Pfeilen und Wischgesten
 - Kontaktformular mit Auswahl typischer Bestattungsleistungen
+- Terminbuchung über Calendly vorgesehen
 - Telefon- und E-Mail-Kontakt
 - Illustrative Standortkarte und Zurück-nach-oben-Button
 
-Das Formular öffnet das E-Mail-Programm mit einer vorbereiteten Nachricht. Die Anwendung benötigt kein Backend und keine Datenbank und speichert die Formulareingaben nicht.
+Über das Kontaktformular sollen Besucher Dienstleistungen anfragen oder weitere Informationen erhalten können. Dazu wählen sie ein Anliegen aus und geben ihre Kontaktdaten sowie eine Nachricht ein.
+
+Der Button „Termin vereinbaren“ ist für die Terminbuchung über Calendly vorgesehen. Besucher sollen dort einen freien Termin für ein persönliches Gespräch auswählen und buchen können.
+
+In dieser Arbeitsprobe wird die Nachricht zum Versand im E-Mail-Programm vorbereitet. Eine direkte Übermittlung über das Formular ist noch nicht eingerichtet.
 
 Telefon und Calendly-Link werden in `src/config.js` konfiguriert. Der Calendly-Link ist derzeit noch nicht hinterlegt. Rechtliche Links und Routenplanung sind Platzhalter; Kundenstimmen sind Beispiele.
 
