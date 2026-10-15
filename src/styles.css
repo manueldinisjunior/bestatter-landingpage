@@ -105,3 +105,11 @@ header::before {
 header.is-scrolled::before { opacity: 1; }
 header > * { position: relative; }
 @media (prefers-reduced-motion: reduce) { header::before { transition: none; } }
+
+.continuous-carousel { container-type: inline-size; }
+.continuous-carousel .carousel-viewport { cursor: grab; touch-action: pan-y; user-select: none; }
+.continuous-carousel .carousel-viewport.is-dragging { cursor: grabbing; }
+.continuous-track { display: flex; width: 100%; will-change: transform; }
+.testimonial-set { display: flex; flex: 0 0 auto; gap: 24px; padding-right: 24px; }
+.testimonial-set figure { flex: 0 0 auto; width: calc((100cqw - 24px) / 2); margin: 0; padding: clamp(24px,4vw,40px); }
+@media (max-width: 720px) { .testimonial-set figure { width: 100cqw; padding: 24px; } }
