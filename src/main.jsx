@@ -131,19 +131,20 @@ function App() {
     };
   }, []);
   function navigate(event, id) {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button > 0) return;
     const target = document.getElementById(id);
     if (!target) return;
     event.preventDefault();
     cancelAnimationFrame(scrollFrame.current);
     setMenu(false);
     scrollFrame.current = requestAnimationFrame(() => {
-      const start = window.scrollY;
+      const scroller = document.scrollingElement || document.documentElement;
+      const start = scroller.scrollTop;
       const offset = document.querySelector('header').getBoundingClientRect().height + 24;
       const end = Math.max(0, Math.min(start + target.getBoundingClientRect().top - offset,
         document.documentElement.scrollHeight - window.innerHeight));
       const distance = end - start;
-      const duration = Math.min(1600, Math.max(1100, Math.abs(distance) * 0.65));
+      const duration = Math.min(2200, Math.max(1600, Math.abs(distance) * 0.8));
       let started;
       function finish() {
         if (window.location.hash !== '#' + id) window.history.pushState(null, '', '#' + id);
@@ -156,7 +157,7 @@ function App() {
         const eased = progress < 0.5
           ? 4 * progress * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-        window.scrollTo(0, start + distance * eased);
+        scroller.scrollTop = start + distance * eased;
         if (progress < 1) scrollFrame.current = requestAnimationFrame(step);
         else finish();
       }
@@ -176,15 +177,21 @@ function App() {
     dialog.current.showModal();
   }
   const CTA = ({ secondary = false }) => <button className={secondary ? 'button secondary' : 'button'} onClick={() => contact(secondary ? 'phone' : 'booking')}>{secondary ? 'Jetzt anrufen' : 'Termin vereinbaren'}<Icon name="arrow" size={18}/></button>;
-  return <>
+  function handleAnchorClick(event) {
+    const anchor = event.target.closest('a[href^="#"]');
+    if (!anchor || anchor.classList.contains('skip')) return;
+    const id = anchor.getAttribute('href').slice(1);
+    if (id) navigate(event, id);
+  }
+  return <div onClickCapture={handleAnchorClick}>
     <a className="skip" href="#main">Zum Inhalt</a>
-    <header className={scrolled ? 'is-scrolled' : undefined}><a className="brand" href="#start" onClick={event => navigate(event, 'start')} aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
+    <header className={scrolled ? 'is-scrolled' : undefined}><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
       <button className="menu" aria-label={menu ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>
         <svg className="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
           <path className="menu-line-top" d="M4 7h16"/><path className="menu-line-middle" d="M4 12h16"/><path className="menu-line-bottom" d="M4 17h16"/>
         </svg>
       </button>
-      <nav id="navigation" className={menu ? 'open' : ''} aria-label="Hauptnavigation">{[['ablauf','Ablauf'],['zusammenarbeit','Zusammenarbeit'],['kontakt','Kontakt']].map(([id, label]) => <a key={id} href={'#'+id} onClick={(event) => navigate(event, id)}>{label}</a>)}<CTA /></nav>
+      <nav id="navigation" className={menu ? 'open' : ''} aria-label="Hauptnavigation">{[['ablauf','Ablauf'],['zusammenarbeit','Zusammenarbeit'],['kontakt','Kontakt']].map(([id, label]) => <a key={id} href={'#'+id}>{label}</a>)}<CTA /></nav>
     </header>
     <main id="main">
       <section className="hero section" id="start"><div><p className="eyebrow">BESTATTUNG & VORSORGE</p><h1>In schweren Zeiten.<br/><span>An Ihrer Seite.</span></h1><p className="lead">{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p className="fine">Bestattung · Vorsorge · Persönliches Gespräch</p></div><div className="hero-art"><img src="./placeholder.svg" width="600" height="660" alt="" fetchPriority="high"/><div className="art-caption"><span><Icon name="heart" size={32}/></span><p>Raum für Abschied.<br/><strong>Zeit für Erinnerung.</strong></p></div></div></section>
@@ -194,8 +201,8 @@ function App() {
       <section className="section collaboration" id="zusammenarbeit"><div className="section-heading"><p className="eyebrow">03 / ZUSAMMENARBEIT</p><h2>Ein persönlicher Abschied.<br/><span>Ein bleibendes Andenken.</span></h2><p>{lorem}</p><CTA/></div><div className="features">{['Bestattungsarten', 'Trauerfeier & Erinnerung', 'Bestattungsvorsorge'].map((title, index) => <article key={title}><span>0{index + 1}</span><div><h3>{title}</h3><p>{lorem}</p></div></article>)}</div></section>
       <section className="contact section" id="kontakt"><p className="eyebrow">04 / KONTAKT</p><h2>Der erste Schritt:<br/>Ein persönliches Gespräch.</h2><p>{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p><a href={"tel:" + config.phone}>040 60 94 39 46</a></p><p><a href="mailto:mail@alstercloud.de">mail@alstercloud.de</a></p></section>
     </main>
-    <footer><a className="brand" href="#start" onClick={event => navigate(event, 'start')} aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841" loading="lazy"/></a><p>AlsterCloud © 2026 Alle Rechte vorbehalten.</p><a href="#kontakt" onClick={event => navigate(event, 'kontakt')}>Kontakt <Icon name="arrow" size={16}/></a></footer>
+    <footer><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841" loading="lazy"/></a><p>AlsterCloud © 2026 Alle Rechte vorbehalten.</p><a href="#kontakt">Kontakt <Icon name="arrow" size={16}/></a></footer>
     <dialog ref={dialog} onClose={() => previousFocus.current?.focus()} aria-labelledby="notice-title"><h2 id="notice-title">Vorschau</h2><p>{notice}</p><form method="dialog"><button className="button">Schließen</button></form></dialog>
-  </>;
+  </div>;
 }
 createRoot(document.getElementById('root')).render(<App/>);
