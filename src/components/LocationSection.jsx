@@ -53,8 +53,8 @@ export default function LocationSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <NavigationArrow size={20} aria-hidden="true" />
             Route planen
+            <NavigationArrow size={20} aria-hidden="true" />
           </a>
         </div>
       </div>
