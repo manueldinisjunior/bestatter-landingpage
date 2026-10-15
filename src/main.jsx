@@ -17,75 +17,94 @@ function Icon({ name, size = 20 }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name] || paths.arrow}/></svg>;
 }
 function Testimonials() {
-  const [active, setActive] = useState(0);
-  const [desktop, setDesktop] = useState(false);
-  const pageCount = desktop ? 2 : 4;
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 721px)');
-    const update = () => { setDesktop(media.matches); setActive(0); };
-    update();
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
-  }, []);
+  const root = useRef(null);
+  const track = useRef(null);
+  const firstSet = useRef(null);
+  const position = useRef(0);
+  const resumeAt = useRef(0);
+  const drag = useRef(null);
   const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [reduced, setReduced] = useState(true);
-  const [ready, setReady] = useState(false);
-  const startedRotation = useRef(false);
-  const carousel = useRef(null);
+  const [dragging, setDragging] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [reduced, setReduced] = useState(true);
+  function paint() {
+    const width = firstSet.current?.getBoundingClientRect().width || 0;
+    if (!width || !track.current) return;
+    position.current = ((position.current % width) + width) % width;
+    track.current.style.transform = 'translate3d(-' + (width + position.current) + 'px,0,0)';
+  }
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReduced(media.matches);
     update();
     media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
+    const observer = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting);
+      if (entry.isIntersecting) resumeAt.current = performance.now() + 3000;
+    }, { threshold: 0.35 });
+    observer.observe(root.current);
+    const resize = new ResizeObserver(() => paint());
+    resize.observe(root.current);
+    return () => { observer.disconnect(); resize.disconnect(); media.removeEventListener('change', update); };
   }, []);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.35 });
-    observer.observe(carousel.current);
-    return () => observer.disconnect();
-  }, []);
-  useEffect(() => {
-    setReady(false);
-    startedRotation.current = false;
-    if (!visible) return;
-    const timer = window.setTimeout(() => setReady(true), 3000);
-    return () => window.clearTimeout(timer);
-  }, [visible]);
-  const running = visible && ready && !paused && !hovered && !focused && !reduced;
-  useEffect(() => {
-    if (!running) return;
-    // Show the first change after the initial three-second introduction.
-    if (!startedRotation.current) {
-      setActive(index => (index + 1) % pageCount);
-      startedRotation.current = true;
+    let frame;
+    let last;
+    function tick(now) {
+      const delta = last === undefined ? 0 : Math.min(now - last, 50);
+      last = now;
+      if (visible && !paused && !reduced && !drag.current && !document.hidden && now >= resumeAt.current) {
+        position.current += delta * 0.035;
+        paint();
+      }
+      frame = requestAnimationFrame(tick);
     }
-    const timer = window.setInterval(() => {
-      if (!document.hidden) setActive(index => (index + 1) % pageCount);
-    }, 4000);
-    return () => window.clearInterval(timer);
-  }, [running, pageCount]);
-  return <div ref={carousel} className="testimonial-carousel" role="region" aria-roledescription="Karussell" aria-label="Kundenstimmen – vier Platzhalter"
-    onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-    onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
-    <div className="carousel-viewport">
-      <div className="carousel-track" style={{ transform: 'translateX(-' + active * 100 + '%)' }} aria-live="off">
-        {Array.from({ length: pageCount }, (_, page) => <div className="carousel-slide" key={page} role="group" aria-roledescription="Folie" aria-label={(page + 1) + ' von ' + pageCount} aria-hidden={page !== active}>
-          <div className="testimonial-pair">{Array.from({ length: desktop ? 2 : 1 }, (_, position) => {
-            const number = page * (desktop ? 2 : 1) + position + 1;
-            return <figure key={number}><span className="quote-mark"><Icon name="quote" size={32}/></span><blockquote>{lorem}</blockquote><figcaption>{exampleNames[number - 1]} <span>— Beispiel</span></figcaption></figure>;
-          })}</div>
+    if (visible && !paused && !reduced) frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [visible, paused, reduced]);
+  function startDrag(event) {
+    if (event.button !== 0 || !event.isPrimary) return;
+    drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+  function moveDrag(event) {
+    const current = drag.current;
+    if (!current || current.id !== event.pointerId) return;
+    const dx = event.clientX - current.x;
+    if (!current.moved && Math.abs(dx) < 5) return;
+    current.moved = true;
+    setDragging(true);
+    position.current -= dx;
+    current.x = event.clientX;
+    paint();
+  }
+  function stopDrag(event) {
+    if (!drag.current || drag.current.id !== event.pointerId) return;
+    drag.current = null;
+    setDragging(false);
+    resumeAt.current = performance.now() + 5000;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  }
+  function step(direction) {
+    const width = root.current.getBoundingClientRect().width;
+    position.current += direction * (width > 720 ? (width + 24) / 2 : width + 24);
+    paint();
+    resumeAt.current = performance.now() + 5000;
+  }
+  return <div ref={root} className="testimonial-carousel continuous-carousel" role="region" aria-roledescription="Karussell" aria-label="Kundenstimmen – vier Beispiele"
+    onFocusCapture={() => setPaused(true)}>
+    <div className={'carousel-viewport' + (dragging ? ' is-dragging' : '')}
+      onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={stopDrag} onPointerCancel={stopDrag} onLostPointerCapture={stopDrag}>
+      <div ref={track} className="continuous-track" aria-live="off">
+        {[0,1,2].map(copy => <div className="testimonial-set" ref={copy === 0 ? firstSet : undefined} key={copy} aria-hidden={copy !== 1}>
+          {exampleNames.map(name => <figure key={name}><span className="quote-mark"><Icon name="quote" size={32}/></span><blockquote>{lorem}</blockquote><figcaption>{name} <span>— Beispiel</span></figcaption></figure>)}
         </div>)}
       </div>
     </div>
     <div className="carousel-controls">
-      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + pageCount - 1) % pageCount); }} aria-label="Vorherige Kundenstimme"><Icon name="left"/></button>
-      <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button type="button" key={index} aria-label={'Kundenstimme ' + (index + 1)} aria-current={active === index ? 'true' : undefined} onClick={() => { setPaused(true); setActive(index); }}><span/></button>)}</div>
-      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + 1) % pageCount); }} aria-label="Nächste Kundenstimme"><Icon name="right"/></button>
-      {!reduced && <button type="button" className="carousel-pause" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Automatischen Wechsel starten' : 'Automatischen Wechsel pausieren'}>{paused ? 'Abspielen' : 'Pause'}</button>}
-      <span className="carousel-count" role="status" aria-live={running ? 'off' : 'polite'}>{active + 1} / {pageCount}</span>
+      <button type="button" onClick={() => step(-1)} aria-label="Vorherige Kundenstimme"><Icon name="left"/></button>
+      <button type="button" onClick={() => step(1)} aria-label="Nächste Kundenstimme"><Icon name="right"/></button>
+      {!reduced && <button type="button" className="carousel-pause" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Automatischen Lauf starten' : 'Automatischen Lauf pausieren'}>{paused ? 'Abspielen' : 'Pause'}</button>}
     </div>
   </div>;
 }
