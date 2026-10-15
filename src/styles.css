@@ -7,7 +7,8 @@ header {
   top: 0;
   z-index: 100;
   background: #fafaf6;
-  box-shadow: none;
+  box-shadow: 0 1px 0 #dce5dd;
+  transition: box-shadow 400ms ease;
 }
 html {
   scroll-padding-top: 120px;
@@ -100,11 +101,12 @@ header::before {
   box-shadow: none;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 220ms ease;
+  transition: opacity 400ms ease;
 }
+header.is-scrolled { box-shadow: none; }
 header.is-scrolled::before { opacity: 1; }
 header > * { position: relative; }
-@media (prefers-reduced-motion: reduce) { header::before { transition: none; } }
+@media (prefers-reduced-motion: reduce) { header, header::before { transition: none; } }
 
 .continuous-carousel { container-type: inline-size; }
 .continuous-carousel .carousel-viewport { cursor: grab; touch-action: pan-y; user-select: none; }
