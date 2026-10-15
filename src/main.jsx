@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { config } from './config';
 import './styles.css';
+import { Phone, EnvelopeSimple, MapPin, NavigationArrow, ArrowUp, FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo eget magna fermentum iaculis. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
@@ -101,6 +102,53 @@ function Testimonials() {
   </div>;
 }
 
+
+const funeralServices = ['Erdbestattung', 'Feuerbestattung', 'Seebestattung', 'Bestattungsvorsorge', 'Trauerfeier', 'Allgemeine Beratung'];
+function ContactForm() {
+  const [status, setStatus] = useState('');
+  function submit(event) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const body = `Name: ${data.get('name')}\nE-Mail: ${data.get('email')}\nTelefon: ${data.get('phone') || '–'}\nAnliegen: ${data.get('service')}\n\n${data.get('message')}`;
+    window.location.href = `mailto:mail@alstercloud.de?subject=${encodeURIComponent('Kontaktanfrage – ' + data.get('service'))}&body=${encodeURIComponent(body)}`;
+    setStatus('Die Nachricht wurde für Ihr E-Mail-Programm vorbereitet. Bitte senden Sie sie dort ab.');
+  }
+  return <form className="contact-form" onSubmit={submit}>
+    <h3>Schreiben Sie uns</h3>
+    <div className="form-grid">
+      <label>Ihr Name <span aria-hidden="true">*</span><input name="name" autoComplete="name" placeholder="Max Mustermann" required maxLength={100}/></label>
+      <label>Ihre E-Mail-Adresse <span aria-hidden="true">*</span><input name="email" type="email" autoComplete="email" placeholder="max@beispiel.de" required maxLength={200}/></label>
+      <label>Telefonnummer <span className="optional">(optional)</span><input name="phone" type="tel" autoComplete="tel" placeholder="040 123 45 67" maxLength={40}/></label>
+      <label>Wobei dürfen wir Sie unterstützen? <span aria-hidden="true">*</span><select name="service" required defaultValue=""><option value="" disabled>Bitte wählen</option>{funeralServices.map(service => <option key={service}>{service}</option>)}</select></label>
+      <label className="full-field">Ihre Nachricht <span aria-hidden="true">*</span><textarea name="message" required rows={4} minLength={10} maxLength={4000} placeholder="Ihre Nachricht an uns …"/></label>
+    </div>
+    <label className="privacy-check"><input type="checkbox" required/><span>Ich habe die <a href="https://www.alstercloud.de/datenschutz/" target="_blank" rel="noreferrer">Datenschutzerklärung</a> gelesen.</span></label>
+    <button type="submit" className="button">Nachricht senden <Icon name="arrow" size={18}/></button>
+    <p className="form-note">Öffnet Ihr E-Mail-Programm. Mit * markierte Felder sind Pflichtfelder.</p>
+    <p className="form-status" role="status">{status}</p>
+  </form>;
+}
+function LocationSection() {
+  const [mapVisible, setMapVisible] = useState(false);
+  const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=AlsterCloud+Winterhuder+Weg+31+22085+Hamburg';
+  return <section className="location-section section" id="standort" aria-labelledby="location-title">
+    <p className="eyebrow">05 / STANDORT</p><h2 id="location-title">Hier finden Sie uns</h2>
+    <div className="location-grid">
+      <div className="location-map">{mapVisible ? <iframe title="Karte: Winterhuder Weg 31, Hamburg" src="https://maps.google.com/maps?q=AlsterCloud%20Winterhuder%20Weg%2031%2022085%20Hamburg&z=15&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/> : <div className="map-consent"><MapPin size={36} weight="light" aria-hidden="true"/><h3>Unser Standort in Hamburg</h3><p>Winterhuder Weg 31, 22085 Hamburg</p><button className="button" onClick={() => setMapVisible(true)}>Google Maps laden</button><p className="map-notice">Beim Laden der Karte wird eine Verbindung zu Google hergestellt.</p><a href={mapsUrl} target="_blank" rel="noreferrer">Direkt in Google Maps öffnen</a></div>}</div>
+      <div className="location-details"><h3>Bestatter</h3><address><div><MapPin size={24} aria-hidden="true"/><span>Winterhuder Weg 31<br/>22085 Hamburg</span></div><a href="tel:+494060943946"><Phone size={24} aria-hidden="true"/>040 60 94 39 46</a><a href="mailto:mail@alstercloud.de"><EnvelopeSimple size={24} aria-hidden="true"/>mail@alstercloud.de</a></address><a className="button secondary" href={mapsUrl} target="_blank" rel="noreferrer"><NavigationArrow size={20} aria-hidden="true"/>Route planen <Icon name="arrow" size={18}/></a></div>
+    </div>
+  </section>;
+}
+function SiteFooter() {
+  const [notice, setNotice] = useState('');
+  return <footer className="site-footer">
+    <div className="footer-top"><a className="brand footer-brand" href="#start" aria-label="Bestatter – Startseite"><img className="brand-symbol" src="./favicon.svg" alt="" width="56" height="56"/><span>BESTATTER</span></a>
+      <div className="footer-social"><h3>Folgen Sie uns</h3><div className="social-links">{[['Facebook', FacebookLogo], ['Instagram', InstagramLogo], ['LinkedIn', LinkedinLogo]].map(([label, SocialIcon]) => <button key={label} type="button" aria-label={label} onClick={() => setNotice('Der ' + label + '-Link wird für die finale Version ergänzt.')}><SocialIcon size={23} weight="regular" aria-hidden="true"/></button>)}</div><p className="footer-status" role="status">{notice}</p></div>
+    </div>
+    <div className="footer-bottom"><p>Bestatter © 2026 Alle Rechte vorbehalten.</p><nav aria-label="Footer"><a href="https://www.alstercloud.de/impressum/" target="_blank" rel="noreferrer">Impressum</a><a href="https://www.alstercloud.de/datenschutz/" target="_blank" rel="noreferrer">Datenschutz &amp; Cookies</a><button type="button" className="footer-link" onClick={() => setNotice('Bildnachweise: AlsterCloud-Logo bereitgestellt durch AlsterCloud. Landschaftsgrafik: projektinterner Platzhalter. Kartenmaterial bei Aktivierung: Google Maps.')}>Bildnachweise</button><a href="#kontakt">Kontakt</a></nav><a className="back-to-top" href="#start" aria-label="Zur Startsektion"><ArrowUp size={20} aria-hidden="true"/><span>Nach oben</span></a></div>
+  </footer>;
+}
+
 function App() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -185,7 +233,7 @@ function App() {
   }
   return <div onClickCapture={handleAnchorClick}>
     <a className="skip" href="#main">Zum Inhalt</a>
-    <header className={scrolled ? 'is-scrolled' : undefined}><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
+    <header className={scrolled ? 'is-scrolled' : undefined}><a className="brand" href="#start" aria-label="Bestatter – Startseite"><img className="brand-symbol" src="./favicon.svg" alt="" width="48" height="48"/><span>BESTATTER</span></a>
       <button className="menu" aria-label={menu ? 'Menü schließen' : 'Menü öffnen'} aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>
         <svg className="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
           <path className="menu-line-top" d="M4 7h16"/><path className="menu-line-middle" d="M4 12h16"/><path className="menu-line-bottom" d="M4 17h16"/>
@@ -199,9 +247,10 @@ function App() {
       <section className="section process" id="ablauf"><div className="section-heading"><p className="eyebrow">01 / ABLAUF</p><h2>Den Abschied gestalten.<br/>Schritt für Schritt.</h2><p>{lorem}</p></div><div className="steps">{['Erstes Gespräch', 'Persönliche Wünsche', 'Abschied & Begleitung'].map((title, index) => <article key={title}><span className="number">0{index + 1}</span><h3>{title}</h3><p>{lorem}</p><span className="step-line"><Icon name="arrow" size={24}/></span></article>)}</div><div className="section-action"><CTA/></div></section>
       <section className="quotes section"><p className="eyebrow">02 / KUNDENSTIMMEN · PLATZHALTER</p><h2>Worte der Erinnerung und Verbundenheit.</h2><Testimonials/></section>
       <section className="section collaboration" id="zusammenarbeit"><div className="section-heading"><p className="eyebrow">03 / ZUSAMMENARBEIT</p><h2>Ein persönlicher Abschied.<br/><span>Ein bleibendes Andenken.</span></h2><p>{lorem}</p><CTA/></div><div className="features">{['Bestattungsarten', 'Trauerfeier & Erinnerung', 'Bestattungsvorsorge'].map((title, index) => <article key={title}><span>0{index + 1}</span><div><h3>{title}</h3><p>{lorem}</p></div></article>)}</div></section>
-      <section className="contact section" id="kontakt"><p className="eyebrow">04 / KONTAKT</p><h2>Der erste Schritt:<br/>Ein persönliches Gespräch.</h2><p>{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p><a href={"tel:" + config.phone}>040 60 94 39 46</a></p><p><a href="mailto:mail@alstercloud.de">mail@alstercloud.de</a></p></section>
+      <section className="contact-cta" id="kontakt" aria-labelledby="contact-title"><div className="section contact-cta-grid"><div className="contact-pitch"><p className="eyebrow">PERSÖNLICHE BERATUNG</p><h2 id="contact-title">Lassen Sie<br/>uns sprechen.</h2><p>{lorem}</p><div className="contact-reassurance"><Icon name="heart" size={36}/><span>Wir sind für Sie da –<br/>mit Herz und Verständnis.</span></div><div className="actions"><CTA/><CTA secondary/></div></div><ContactForm/></div></section>
+      <LocationSection/>
     </main>
-    <footer><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841" loading="lazy"/></a><p>AlsterCloud © 2026 Alle Rechte vorbehalten.</p><a href="#kontakt">Kontakt <Icon name="arrow" size={16}/></a></footer>
+    <SiteFooter/>
     <dialog ref={dialog} onClose={() => previousFocus.current?.focus()} aria-labelledby="notice-title"><h2 id="notice-title">Vorschau</h2><p>{notice}</p><form method="dialog"><button className="button">Schließen</button></form></dialog>
   </div>;
 }
