@@ -64,7 +64,7 @@ Die KI-generierten Illustrationen ergänzen das bereitgestellte AlsterCloud-Logo
 
 © 2026 AlsterCloud. Alle Rechte vorbehalten.
 
-Eine Nutzung, Vervielfältigung oder Weitergabe ist nur mit Zustimmung der jeweiligen Rechteinhaber gestattet. Verwendete Open-Source-Abhängigkeiten unterliegen ihren eigenen Lizenzen.
+Eine Nutzung, Vervielfältigung oder Weitergabe ist nur mit Zustimmung der jeweiligen Rechteinhaber gestattet.
 
 ---
 
