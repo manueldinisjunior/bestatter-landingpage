@@ -1456,3 +1456,24 @@ header nav a:not(.button) {
     align-items: center;
   }
 }
+
+/* Place the mobile back-to-top action beside the final contact link. */
+@media (max-width: 720px) {
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .footer-bottom > p { grid-column: 1 / -1; }
+  .footer-bottom nav { grid-area: 2 / 1 / 3 / -1; }
+  .footer-bottom nav > a:last-child {
+    flex-basis: 100%;
+    min-height: 64px;
+    padding-right: 100px;
+  }
+  .footer-bottom .back-to-top {
+    grid-area: 2 / 2 / 3 / 3;
+    align-self: end;
+    justify-self: end;
+    margin-left: 0;
+  }
+}
