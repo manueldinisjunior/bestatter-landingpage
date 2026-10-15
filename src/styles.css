@@ -154,7 +154,7 @@ html, body { scroll-behavior: auto !important; }
 .form-status { font-size: 13px; margin: 12px 0 0; }
 .form-status:empty { display: none; }
 .location-section > h2 { margin-bottom: 36px; }
-.location-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: stretch; }
+.location-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: center; }
 .location-map { min-height: 390px; border-radius: 8px; border: 1px solid #dce5dd; overflow: hidden; background: #edf1e9; }
 .location-map iframe { width: 100%; height: 100%; min-height: 390px; border: 0; display: block; }
 .map-consent { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 36px 24px; height: 100%; text-align: center; }
@@ -163,8 +163,8 @@ html, body { scroll-behavior: auto !important; }
 .map-consent .map-notice { font-size: 12px; max-width: 38ch; margin: 16px 0 8px; }
 .map-consent > a { font-size: 13px; text-decoration: underline; }
 .location-details { padding: 16px 0 16px 32px; border-left: 1px solid #dce5dd; }
-.location-details h3 { font-size: 30px; margin-bottom: 32px; }
-.location-details address { display: flex; flex-direction: column; gap: 28px; margin-bottom: 36px; font-style: normal; }
+.location-details h3 { font-size: 30px; margin-bottom: 24px; }
+.location-details address { display: flex; flex-direction: column; gap: 20px; margin-bottom: 28px; font-style: normal; }
 .location-details address > * { display: flex; align-items: center; gap: 18px; line-height: 1.6; }
 .location-details address svg { flex-shrink: 0; color: #00816c; }
 .site-footer { display: block; padding-top: 0; }
@@ -203,10 +203,12 @@ html, body { scroll-behavior: auto !important; }
   .brand-symbol { width: 40px; height: 40px; }
 }
 
-.location-map-image { display: block; width: 100%; height: 100%; min-height: 390px; object-fit: cover; }
-@media(max-width:720px) { .location-map-image { height: auto; min-height: 0; object-fit: contain; } }
-
-/* Preserve the requested 4:3 map at every viewport. */
-.location-map { min-height: 0; aspect-ratio: 4 / 3; align-self: start; }
-.location-map-image { display: block; width: 100%; height: 100%; min-height: 0; aspect-ratio: 4 / 3; object-fit: cover; }
-@media(max-width:720px) { .location-map { min-height: 0; } .location-map-image { height: 100%; min-height: 0; } }
+/* Compact map framing keeps the location and contact details in one view. */
+.location-map { min-height: 0; height: clamp(260px, 24vw, 320px); align-self: center; }
+.location-map-image { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; object-position: center; }
+@media(max-width:720px) {
+  .location-section > h2 { margin-bottom: 24px; }
+  .location-grid { gap: 24px; }
+  .location-map { height: clamp(220px, 56vw, 280px); }
+  .location-details h3 { margin-bottom: 20px; }
+}
