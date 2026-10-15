@@ -29,7 +29,18 @@ Der Button „Termin vereinbaren“ ist für die Terminbuchung über Calendly vo
 
 In dieser Arbeitsprobe wird die Nachricht zum Versand im E-Mail-Programm vorbereitet. Eine direkte Übermittlung über das Formular ist noch nicht eingerichtet.
 
-Telefon und Calendly-Link werden in `src/config.js` konfiguriert. Der Calendly-Link ist derzeit noch nicht hinterlegt. Rechtliche Links und Routenplanung sind Platzhalter; Kundenstimmen sind Beispiele.
+Telefon und Calendly-Link werden in `src/config.js` konfiguriert. Der Calendly-Link ist derzeit noch nicht hinterlegt. Rechtliche Links sind Platzhalter; Kundenstimmen sind Beispiele. „Route planen“ öffnet Google Maps mit der angezeigten Adresse.
+
+## Projektplanung
+
+Die sechs Planungsdokumente beschreiben den aktuellen Stand, Abnahmekriterien und offene Aufgaben:
+
+1. [Produktanforderungen](docs/01-produktanforderungen.md)
+2. [Technische Anforderungen](docs/02-technische-anforderungen.md)
+3. [App Flow](docs/03-app-flow.md)
+4. [Design Brief](docs/04-design-brief.md)
+5. [Datenschema und Datenfluss](docs/05-datenschema.md)
+6. [Implementierungsplan und Abnahme](docs/06-implementierungsplan.md)
 
 ## Tech Stack
 
