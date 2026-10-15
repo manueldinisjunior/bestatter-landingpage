@@ -36,6 +36,8 @@ npm run dev
 
 Mit `npm run build` wird die Produktionsversion erstellt; `npm run preview` startet die lokale Vorschau.
 
+Mit `npm test` werden Rendering, interne Links und Formularstruktur geprüft.
+
 [Kurzer Projektüberblick](docs/projektbrief.md)
 
 ## Bildnachweise
