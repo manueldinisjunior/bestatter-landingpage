@@ -146,10 +146,7 @@ export default function App() {
         ),
       );
       const distance = end - start;
-      const duration = window.matchMedia("(prefers-reduced-motion: reduce)")
-        .matches
-        ? 0
-        : Math.min(2200, Math.max(1600, Math.abs(distance) * 0.8));
+      const duration = Math.min(1800, Math.max(1300, Math.abs(distance) * 0.65));
       let started;
       function finish() {
         if (window.location.hash !== "#" + id)
