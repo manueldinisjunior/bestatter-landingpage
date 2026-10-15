@@ -230,7 +230,8 @@ function App() {
       const scroller = document.scrollingElement || document.documentElement;
       const start = scroller.scrollTop;
       const offset = document.querySelector('header').getBoundingClientRect().height + 24;
-      const end = Math.max(0, Math.min(start + target.getBoundingClientRect().top - offset,
+      const scrollAnchor = id === 'start' ? target : target.querySelector('.eyebrow, h2') || target;
+      const end = Math.max(0, Math.min(start + scrollAnchor.getBoundingClientRect().top - offset,
         document.documentElement.scrollHeight - window.innerHeight));
       const distance = end - start;
       const duration = Math.min(2200, Math.max(1600, Math.abs(distance) * 0.8));
