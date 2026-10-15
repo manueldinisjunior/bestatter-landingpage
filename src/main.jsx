@@ -90,7 +90,7 @@ function App() {
         document.documentElement.scrollHeight - window.innerHeight));
       const distance = end - start;
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const duration = reduced ? 0 : Math.min(700, Math.max(400, Math.abs(distance) * 0.35));
+      const duration = reduced ? 0 : Math.min(1600, Math.max(1100, Math.abs(distance) * 0.65));
       let started;
       function finish() {
         if (window.location.hash !== '#' + id) window.history.pushState(null, '', '#' + id);
@@ -100,7 +100,9 @@ function App() {
       function step(time) {
         started ??= time;
         const progress = duration ? Math.min((time - started) / duration, 1) : 1;
-        const eased = 1 - Math.pow(1 - progress, 3);
+        const eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
         window.scrollTo({ top: start + distance * eased, behavior: 'instant' });
         if (progress < 1) scrollFrame.current = requestAnimationFrame(step);
         else finish();
