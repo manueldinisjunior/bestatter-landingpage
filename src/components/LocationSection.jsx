@@ -54,7 +54,7 @@ export default function LocationSection() {
             rel="noopener noreferrer"
           >
             Route planen
-            <NavigationArrow size={20} aria-hidden="true" />
+            <NavigationArrow size={20} aria-hidden="true" style={{ transform: "rotate(90deg)" }} />
           </a>
         </div>
       </div>
