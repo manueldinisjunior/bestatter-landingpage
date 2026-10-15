@@ -153,7 +153,7 @@ function LocationSection() {
     <p className="eyebrow">06 / STANDORT</p><h2 id="location-title">Hier finden Sie uns</h2>
     <div className="location-grid">
       <div className="location-map"><img className="location-map-image" src="./bestatter-map.webp" alt="Illustrative Standortkarte: Bestatter, Winterhuder Weg 31, 22085 Hamburg" width="1774" height="887" loading="lazy"/></div>
-      <div className="location-details"><h3>Bestatter</h3><address><div><MapPin size={24} aria-hidden="true"/><span>Winterhuder Weg 31<br/>22085 Hamburg</span></div><a href="tel:+494060943946"><Phone size={24} aria-hidden="true"/>040 60 94 39 46</a><a href="mailto:mail@alstercloud.de"><EnvelopeSimple size={24} aria-hidden="true"/>mail@alstercloud.de</a></address><a className="button secondary" href="#" onClick={event => event.preventDefault()}><NavigationArrow size={20} aria-hidden="true"/>Route planen</a></div>
+      <div className="location-details"><h3>Bestatter</h3><address><div><MapPin size={24} aria-hidden="true"/><span>Winterhuder Weg 31<br/>22085 Hamburg</span></div><a href="tel:+494060943946"><Phone size={24} aria-hidden="true"/>040 60 94 39 46</a><a href="mailto:mail@alstercloud.de"><EnvelopeSimple size={24} aria-hidden="true"/>mail@alstercloud.de</a></address><a className="button secondary" href="https://www.google.com/maps/dir/?api=1&destination=Winterhuder%20Weg%2031%2C%2022085%20Hamburg" target="_blank" rel="noopener noreferrer"><NavigationArrow size={20} aria-hidden="true"/>Route planen</a></div>
     </div>
   </section>;
 }
