@@ -51,3 +51,19 @@ footer .brand-logo { height: 56px; }
   .brand-logo { height: 52px; }
   footer .brand-logo { height: 48px; }
 }
+
+.testimonial-carousel { margin-top: 32px; max-width: 800px; }
+.carousel-viewport { overflow: hidden; border-radius: 6px; }
+.carousel-track { display: flex; transition: transform 550ms cubic-bezier(.22,1,.36,1); will-change: transform; }
+.carousel-slide { flex: 0 0 100%; min-width: 0; }
+.carousel-slide figure { height: 100%; margin: 0; padding: clamp(24px,4vw,40px); }
+.carousel-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.carousel-controls button { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border: 1px solid #bdcfc5; border-radius: 50%; background: transparent; color: var(--dark); }
+.carousel-controls button:hover { background: #dce7db; }
+.carousel-dots { display: flex; gap: 0; }
+.carousel-dots button { border: 0; min-width: 32px; }
+.carousel-dots span { width: 6px; height: 6px; border-radius: 50%; background: #82998b; transition: width 200ms,background 200ms; }
+.carousel-dots [aria-current="true"] span { width: 20px; border-radius: 8px; background: var(--dark); }
+.carousel-controls .carousel-pause { border-radius: 6px; padding: 0 14px; }
+.carousel-count { margin-left: auto; font-size: 13px; color: #536a62; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .carousel-track, .carousel-dots span { transition: none; } }
