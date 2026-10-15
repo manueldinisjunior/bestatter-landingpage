@@ -121,3 +121,6 @@ html { scroll-behavior: auto; }
 .paged-carousel .carousel-track { transition: transform 650ms cubic-bezier(.22,1,.36,1); }
 .paged-carousel .testimonial-pair { height: 100%; }
 @media (prefers-reduced-motion: reduce) { .paged-carousel .carousel-track { transition: none; } }
+
+/* Prevent browser scroll interpolation competing with the shared anchor animator. */
+html, body { scroll-behavior: auto !important; }
