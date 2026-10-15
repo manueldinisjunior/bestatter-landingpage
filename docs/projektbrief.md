@@ -12,7 +12,7 @@ Start → Ablauf → Leistungen → Kundenstimmen → Zusammenarbeit → Kontakt
 
 ## Gestaltung
 
-Die Seite verbindet ruhige Grüntöne, Cormorant Garamond und Bebas Neue mit dem bereitgestellten AlsterCloud-Logo. Desktop und mobile Darstellung folgen derselben Struktur. Karussells und animierte Navigation unterstützen die Orientierung.
+Die Seite verbindet ruhige Grüntöne, PT Sans und Bebas Neue mit dem bereitgestellten AlsterCloud-Logo. Desktop und mobile Darstellung folgen derselben Struktur. Karussells und animierte Navigation unterstützen die Orientierung.
 
 ## Umsetzung und Umfang
 

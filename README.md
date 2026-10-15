@@ -6,7 +6,7 @@ Responsive Onepager für ein Bestattungsunternehmen. Die Seite wurde als Arbeits
 
 ## Überblick
 
-Die Seite stellt Leistungen, Ablauf und Kontaktmöglichkeiten vor. Die Gestaltung verwendet die Markenfarbe `#00a98e`, das bereitgestellte AlsterCloud-Logo sowie Cormorant Garamond und Bebas Neue.
+Die Seite stellt Leistungen, Ablauf und Kontaktmöglichkeiten vor. Die Gestaltung verwendet die Markenfarbe `#00a98e`, das bereitgestellte AlsterCloud-Logo sowie PT Sans und Bebas Neue.
 
 Der Aufbau folgt einer klaren Reihenfolge: Start, Ablauf, Leistungen, Kundenstimmen, Zusammenarbeit, Kontakt und Standort.
 
@@ -28,7 +28,7 @@ Der Aufbau folgt einer klaren Reihenfolge: Start, Ablauf, Leistungen, Kundenstim
 | CSS | Layout, Typografie, responsive Darstellung und Animationen |
 | Vite | Lokaler Entwicklungsserver und optimierter Produktionsbuild |
 | Phosphor Icons | Symbole für Aktionen, Leistungen und Bewertungen |
-| Google Fonts | Bereitstellung von Cormorant Garamond und Bebas Neue |
+| Google Fonts | Bereitstellung von PT Sans und Bebas Neue |
 | Git und GitHub | Versionsverwaltung und Quellcode-Repository |
 | GitHub Actions und Pages | Automatische Tests, Build und Veröffentlichung |
 | Node.js und npm | Ausführung der Entwicklungswerkzeuge und Installation der Abhängigkeiten |
