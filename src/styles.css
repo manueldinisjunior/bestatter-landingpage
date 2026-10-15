@@ -7,7 +7,7 @@ header {
   top: 0;
   z-index: 100;
   background: #fafaf6;
-  box-shadow: 0 1px 0 #dce5dd;
+  box-shadow: none;
 }
 html {
   scroll-padding-top: 120px;
@@ -97,7 +97,7 @@ header::before {
   left: calc((100% - 100vw) / 2);
   right: calc((100% - 100vw) / 2);
   background: #fafaf6;
-  box-shadow: 0 1px 0 #dce5dd, 0 8px 24px #163d3508;
+  box-shadow: none;
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms ease;
