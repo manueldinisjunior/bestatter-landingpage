@@ -1,23 +1,66 @@
 # Bestatter Landingpage
 
-Arbeitsprobe nach Brankos Briefing: React + Vite, PT Sans, Bebas Neue, #00a98e, Lorem Ipsum, responsive Onepager.
+Responsive Onepager für ein Bestattungsunternehmen, erstellt als Arbeitsprobe nach dem Briefing von AlsterCloud. Ziel ist die Kontaktaufnahme per Telefon, Terminanfrage oder Nachricht.
 
-## Entwicklung
+[Live-Demo](https://manueldinisjunior.github.io/bestatter-landingpage/)
 
-Node.js 22 oder neuer. `npm install`, dann `npm run dev`. Produktion: `npm run build`; lokale Vorschau: `npm run preview`.
+## Designanforderungen
 
-## Konfiguration
+- Corporate Color: `#00a98e`
+- Schriftarten: PT Sans und Bebas Neue gemäß Briefing
+- Bereitgestelltes AlsterCloud-Logo
+- Ruhige Gestaltung mit klarer Struktur und großzügigen Abständen
+- Responsive Darstellung für Desktop, Tablet und Smartphone
+- Lorem Ipsum für längere Texte und beispielhafte Kundenstimmen
 
-In src/config.js Name, Telefon und Calendly-Link ergänzen. Solange Telefonnummer oder Calendly-Link fehlen, zeigen die zugehörigen Aktionen einen Hinweis statt ein falsches Ziel zu öffnen. Platzhaltergrafiken sind lokal und benötigen keine Bilddienste. Texte, Kundenstimmen und rechtliche Angaben sind Platzhalter; keine echten Bewertungen oder Leistungsversprechen.
+## Funktionen
 
-## GitHub Pages
+- Sticky Navigation mit animiertem Scrollen
+- Testimonials mit automatischem Wechsel, Pfeilen und Wischgesten
+- Kontaktformular mit Auswahl typischer Bestattungsleistungen
+- Telefon- und E-Mail-Kontakt
+- Illustrative Standortkarte und Zurück-nach-oben-Button
 
-Settings → Pages → Build and deployment → Source: GitHub Actions. Der Workflow baut und veröffentlicht dist bei Änderungen auf main. Falls die erstmalige Veröffentlichung scheitert, zuerst Pages aktivieren und Workflow erneut starten. Vite base ist relativ, damit Assets unter /bestatter-landingpage/ funktionieren. Keine SPA-Routen nötig.
+Das Formular öffnet das E-Mail-Programm mit einer vorbereiteten Nachricht. Die Anwendung benötigt kein Backend und keine Datenbank und speichert die Formulareingaben nicht.
 
-## Briefing und offene Punkte
+Telefon und Calendly-Link werden in `src/config.js` konfiguriert. Der Calendly-Link ist derzeit noch nicht hinterlegt. Rechtliche Links und Routenplanung sind Platzhalter; Kundenstimmen sind Beispiele.
 
-Struktur angelehnt an https://umzug-anfragen.de/: Hero, drei Prozessschritte, Kundenstimmen-Platzhalter, Zusammenarbeit, Kontakt. Keine Formulare oder Datenbank, da die Zielaktionen Calendly und Telefon sind. Das AlsterCloud-Logo wurde laut Manuel nur als Beispiel geliefert; die Wortmarke BESTATTER ist vorläufig. Die hochgeladene Designinspiration war technisch nicht lesbar und wurde nicht nachgebildet. CMS-Bedarf und öffentliche Nutzung sind noch mit Branko abzuklären.
+## Tech Stack
 
-## Validierung
+- React – Komponenten und Interaktionen
+- Vite – Entwicklung und Produktionsbuild
+- CSS – Layout, responsive Darstellung und Animationen
+- Phosphor Icons – Icons
+- GitHub Actions und GitHub Pages – Build und Hosting
 
-Kein lokaler Build oder Browsertest ausgeführt: Entwicklungsumgebung war beim Erstellen nicht verfügbar. GitHub Actions führt den Produktionsbuild aus. Vor Abgabe Desktop/Mobile, Tastatur, Dialog, Anker, Telefon und Calendly mit echten Konfigurationswerten prüfen.
+## Lokal starten
+
+Voraussetzung: Node.js 22 und npm.
+
+```bash
+npm install
+npm run dev
+```
+
+Produktionsbuild und lokale Vorschau:
+
+```bash
+npm run build
+npm run preview
+```
+
+Änderungen auf `main` werden über GitHub Actions für GitHub Pages gebaut und veröffentlicht.
+
+## Bildnachweise
+
+Die KI-generierten Illustrationen ergänzen das bereitgestellte AlsterCloud-Logo.
+
+## Lizenz
+
+© 2026 AlsterCloud. Alle Rechte vorbehalten.
+
+Eine Nutzung, Vervielfältigung oder Weitergabe ist nur mit Zustimmung der jeweiligen Rechteinhaber gestattet. Verwendete Open-Source-Abhängigkeiten unterliegen ihren eigenen Lizenzen.
+
+---
+
+Entwickelt von AlsterCloud.
