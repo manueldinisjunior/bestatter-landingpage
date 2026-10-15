@@ -4,6 +4,52 @@ import { config } from './config';
 import './styles.css';
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo eget magna fermentum iaculis. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+
+function Testimonials() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [reduced, setReduced] = useState(true);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduced(media.matches);
+    update();
+    media.addEventListener('change', update);
+    const timer = window.setTimeout(() => setReady(true), 3000);
+    return () => { window.clearTimeout(timer); media.removeEventListener('change', update); };
+  }, []);
+  const running = ready && !paused && !hovered && !focused && !reduced;
+  useEffect(() => {
+    if (!running) return;
+    // Show the first change after the initial three-second introduction.
+    setActive(index => (index + 1) % 4);
+    const timer = window.setInterval(() => {
+      if (!document.hidden) setActive(index => (index + 1) % 4);
+    }, 4000);
+    return () => window.clearInterval(timer);
+  }, [running]);
+  return <div className="testimonial-carousel" role="region" aria-roledescription="Karussell" aria-label="Kundenstimmen – vier Platzhalter"
+    onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+    onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
+    <div className="carousel-viewport">
+      <div className="carousel-track" style={{ transform: 'translateX(-' + active * 100 + '%)' }} aria-live="off">
+        {[1, 2, 3, 4].map((number, index) => <div className="carousel-slide" key={number} role="group" aria-roledescription="Folie" aria-label={number + ' von 4'} aria-hidden={index !== active}>
+          <figure><span className="quote-mark" aria-hidden="true">“</span><blockquote>{lorem}</blockquote><figcaption>Lorem Ipsum {number} <span>— Platzhalter</span></figcaption></figure>
+        </div>)}
+      </div>
+    </div>
+    <div className="carousel-controls">
+      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + 3) % 4); }} aria-label="Vorherige Kundenstimme">←</button>
+      <div className="carousel-dots">{[0,1,2,3].map(index => <button type="button" key={index} aria-label={'Kundenstimme ' + (index + 1)} aria-current={active === index ? 'true' : undefined} onClick={() => { setPaused(true); setActive(index); }}><span/></button>)}</div>
+      <button type="button" onClick={() => { setPaused(true); setActive(index => (index + 1) % 4); }} aria-label="Nächste Kundenstimme">→</button>
+      {!reduced && <button type="button" className="carousel-pause" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Automatischen Wechsel starten' : 'Automatischen Wechsel pausieren'}>{paused ? 'Abspielen' : 'Pause'}</button>}
+      <span className="carousel-count" role="status" aria-live={running ? 'off' : 'polite'}>{active + 1} / 4</span>
+    </div>
+  </div>;
+}
+
 function App() {
   const [menu, setMenu] = useState(false);
   const [notice, setNotice] = useState('');
@@ -81,7 +127,7 @@ function App() {
       <section className="hero section" id="start"><div><p className="eyebrow">BESTATTUNG & VORSORGE</p><h1>In schweren Zeiten.<br/><span>An Ihrer Seite.</span></h1><p className="lead">{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p className="fine">Bestattung · Vorsorge · Persönliches Gespräch</p></div><div className="hero-art"><img src="./placeholder.svg" width="600" height="660" alt="" fetchPriority="high"/><div className="art-caption"><span aria-hidden="true">✳</span><p>Raum für Abschied.<br/><strong>Zeit für Erinnerung.</strong></p></div></div></section>
       <div className="trust-strip" aria-label="Themen"><span>ABSCHIED</span><span>ERINNERUNG</span><span>BEGLEITUNG</span><span>VORSORGE</span></div>
       <section className="section process" id="ablauf"><div className="section-heading"><p className="eyebrow">01 / ABLAUF</p><h2>Den Abschied gestalten.<br/>Schritt für Schritt.</h2><p>{lorem}</p></div><div className="steps">{['Erstes Gespräch', 'Persönliche Wünsche', 'Abschied & Begleitung'].map((title, index) => <article key={title}><span className="number">0{index + 1}</span><h3>{title}</h3><p>{lorem}</p><span className="step-line" aria-hidden="true">↗</span></article>)}</div><div className="section-action"><CTA/></div></section>
-      <section className="quotes section"><p className="eyebrow">02 / KUNDENSTIMMEN · PLATZHALTER</p><h2>Worte der Erinnerung und Verbundenheit.</h2><div className="quote-grid">{[1,2].map(n => <figure key={n}><span className="quote-mark" aria-hidden="true">“</span><blockquote>{lorem}</blockquote><figcaption>Lorem Ipsum <span>— Platzhalter</span></figcaption></figure>)}</div></section>
+      <section className="quotes section"><p className="eyebrow">02 / KUNDENSTIMMEN · PLATZHALTER</p><h2>Worte der Erinnerung und Verbundenheit.</h2><Testimonials/></section>
       <section className="section collaboration" id="zusammenarbeit"><div className="section-heading"><p className="eyebrow">03 / ZUSAMMENARBEIT</p><h2>Ein persönlicher Abschied.<br/><span>Ein bleibendes Andenken.</span></h2><p>{lorem}</p><CTA/></div><div className="features">{['Bestattungsarten', 'Trauerfeier & Erinnerung', 'Bestattungsvorsorge'].map((title, index) => <article key={title}><span>0{index + 1}</span><div><h3>{title}</h3><p>{lorem}</p></div></article>)}</div></section>
       <section className="contact section" id="kontakt"><p className="eyebrow">04 / KONTAKT</p><h2>Der erste Schritt:<br/>Ein persönliches Gespräch.</h2><p>{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p><a href={"tel:" + config.phone}>040 60 94 39 46</a></p><p><a href="mailto:mail@alstercloud.de">mail@alstercloud.de</a></p></section>
     </main>
