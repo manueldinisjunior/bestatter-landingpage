@@ -1,17 +1,14 @@
-# Contact and footer implementation QA
+# Services carousel and testimonial ratings QA
 
-Source visual: /workspace/scratch/1b8f5444872f/generated_images/exec-17b1f091-570a-4219-a33b-9b8987c65f46.png
+Source visuals: upload/image(20261015-204927).png and upload/image(20261015-204936).png.
+Scope: sample testimonial scores 4 / 4.5 / 5 with matching full, half and outline library icons; four funeral services using the shared carousel component.
 
-Scope: approved CTA/form, separate location/map section, footer; visible name changed to Bestatter as requested.
+Checks passed: Vite production build; React server rendering of three rating variants (five icons plus matching numeric score); rendering of all four service slides; git diff whitespace check.
 
-Validation: production Vite build passed; git diff --check passed.
+Browser evidence: unavailable. Cloud browser opening http://terminal.local:4173/ returned net::ERR_BLOCKED_BY_CLIENT. No implementation screenshot, browser viewport measurement, console inspection or interactive desktop/mobile verification was possible.
 
-Browser verification: blocked. Cloud browser opening http://terminal.local:4173/ returned net::ERR_BLOCKED_BY_CLIENT. No browser screenshot or desktop/mobile interaction verification completed. Viewport and density comparison unavailable. No visual fidelity pass claimed.
+Typography: existing PT Sans and branding retained intentionally. Layout: services configured for three cards above 720px and one below; testimonials retain two and one. Colors: existing forest-green/sage tokens retained. Icons: Phosphor library full/half stars and service icons. Content: Lorem Ipsum and explicit sample review labels retained. These code observations are not a rendered visual comparison.
 
-Expected intentional differences: PT Sans retained from original brief instead of image-generated serif display; map loads on user request rather than automatically; form prepares mailto because backend was explicitly excluded; social destination URLs are not supplied, so buttons provide an inline notice; original cloud mark reused with Bestatter wordmark.
-
-Required surfaces: typography, spacing, colors, image quality, and copy are implemented but browser-rendered comparison remains pending. Full-view and focused comparison not available.
-
-Primary interactions pending browser verification: required fields and service selection, email draft preparation, map activation, route link, internal anchor animation, back-to-top, mobile stacking and keyboard focus.
+Pending: desktop/mobile full-view and focused comparisons, swipe/drag, next/previous, automatic progression and reading delay, keyboard focus and contrast. No visual fidelity pass claimed.
 
 final result: blocked

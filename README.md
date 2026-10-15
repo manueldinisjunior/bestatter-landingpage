@@ -16,7 +16,8 @@ Responsive Onepager für ein Bestattungsunternehmen, erstellt als Arbeitsprobe n
 ## Funktionen
 
 - Sticky Navigation mit animiertem Scrollen
-- Testimonials mit automatischem Wechsel, Pfeilen und Wischgesten
+- Testimonials mit beispielhaften Sternebewertungen, automatischem Wechsel, Pfeilen und Wischgesten
+- Leistungen als Karussell: drei Karten auf dem Desktop, eine auf dem Smartphone
 - Kontaktformular mit Auswahl typischer Bestattungsleistungen
 - Terminbuchung über Calendly vorgesehen
 - Telefon- und E-Mail-Kontakt

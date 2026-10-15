@@ -251,3 +251,24 @@ html, body { scroll-behavior: auto !important; }
   .trust-benefits svg { width: 24px; height: 24px; }
   .calendly-button { width: 100%; padding-inline: 16px; }
 }
+
+/* Shared carousel layout: one-step progression for services and testimonials. */
+.testimonial-pair { grid-template-columns: repeat(var(--carousel-columns, 2), minmax(0, 1fr)); }
+.carousel-slide figcaption { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: auto; }
+.carousel-slide figure { display: flex; flex-direction: column; }
+.testimonial-author { color: #183d35; font-weight: 700; }
+.testimonial-author small { display: block; color: #63776d; font-size: 11px; font-weight: 400; margin-top: 4px; }
+.testimonial-rating { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-left: 16px; border-left: 1px solid #bdcfc5; }
+.rating-stars { display: inline-flex; gap: 2px; color: #164d41; }
+.rating-value { font-size: 12px; color: #536a62; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.services-section { padding-top: 24px; }
+.services-carousel { margin-top: 28px; }
+.service-card { min-width: 0; height: 100%; padding: clamp(24px, 3vw, 36px); border: 1px solid #dce5dd; border-radius: 6px; text-align: center; }
+.service-card > svg { color: #24574b; margin-bottom: 20px; }
+.service-card h3 { font-size: clamp(19px, 2vw, 23px); margin-bottom: 12px; }
+.service-card p { font-size: 15px; line-height: 1.7; margin-bottom: 0; }
+.services-carousel .carousel-controls { justify-content: center; }
+@media(max-width:720px) {
+  .testimonial-pair { grid-template-columns: minmax(0, 1fr); }
+  .services-section { padding-top: 16px; }
+}

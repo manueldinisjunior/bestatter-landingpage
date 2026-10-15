@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { config } from './config';
 import './styles.css';
-import { UsersThree, ShieldCheck, Leaf, Heart, Handshake, CalendarBlank, Phone, EnvelopeSimple, MapPin, NavigationArrow, ArrowUp, FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
+import { Star, StarHalf, Fire, Waves, HandsPraying, UsersThree, ShieldCheck, Leaf, Heart, Handshake, CalendarBlank, Phone, EnvelopeSimple, MapPin, NavigationArrow, ArrowUp, FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo eget magna fermentum iaculis. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
@@ -25,7 +25,28 @@ function Icon({ name, size = 20 }) {
   };
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name] || paths.arrow}/></svg>;
 }
-function Testimonials() {
+const exampleRatings = [4, 4.5, 5, 4, 5, 4.5];
+const testimonials = exampleNames.map((name, index) => ({ name, text: exampleTexts[index], rating: exampleRatings[index] }));
+const services = [
+  { title: 'Erdbestattung', Icon: Leaf, text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae sapien ut libero venenatis faucibus.' },
+  { title: 'Feuerbestattung', Icon: Fire, text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.' },
+  { title: 'Seebestattung', Icon: Waves, text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
+  { title: 'Bestattungsvorsorge', Icon: HandsPraying, text: 'Curabitur ullamcorper ultricies nisi. Nam eget dui, etiam rhoncus. Maecenas tempus, tellus eget condimentum.' }
+];
+function Rating({ value }) {
+  return <span className="testimonial-rating" role="img" aria-label={'Beispielbewertung: ' + String(value).replace('.', ',') + ' von 5 Sternen'}>
+    <span className="rating-stars" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => value >= index + 1 ? <Star key={index} size={18} weight="fill"/> : value >= index + 0.5 ? <StarHalf key={index} size={18} weight="fill"/> : <Star key={index} size={18}/>)}</span>
+    <span className="rating-value" aria-hidden="true">{value.toFixed(1).replace('.', ',')} / 5</span>
+  </span>;
+}
+function TestimonialCard({ item }) {
+  return <figure><span className="quote-mark"><Icon name="quote" size={32}/></span><blockquote>{item.text}</blockquote><figcaption><span className="testimonial-author">{item.name}<small>Beispiel</small></span><Rating value={item.rating}/></figcaption></figure>;
+}
+function ServiceCard({ item }) {
+  const ServiceIcon = item.Icon;
+  return <article className="service-card"><ServiceIcon size={44} aria-hidden="true"/><h3>{item.title}</h3><p>{item.text}</p></article>;
+}
+function ContentCarousel({ items, renderCard: Card, desktopCount = 2, label, className = '' }) {
   const root = useRef(null);
   const pointer = useRef(null);
   const [active, setActive] = useState(0);
@@ -33,9 +54,9 @@ function Testimonials() {
   const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
   const [restart, setRestart] = useState(0);
-  const pageCount = exampleNames.length;
-  const displayedIndexes = Array.from({ length: desktop ? 2 : 1 }, (_, offset) => (active + offset) % pageCount);
-  const wordCount = displayedIndexes.reduce((total, index) => total + exampleTexts[index].split(/\s+/).length, 0);
+  const pageCount = items.length;
+  const displayedIndexes = Array.from({ length: desktop ? desktopCount : 1 }, (_, offset) => (active + offset) % pageCount);
+  const wordCount = displayedIndexes.reduce((total, index) => total + items[index].text.split(/\s+/).length, 0);
   const readingDelay = Math.max(6000, Math.ceil(wordCount / 180 * 60000) + 1500);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
@@ -74,7 +95,7 @@ function Testimonials() {
     else setRestart(value => value + 1);
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   }
-  return <div ref={root} className="testimonial-carousel paged-carousel" role="region" aria-roledescription="Karussell" aria-label="Kundenstimmen – sechs Beispiele">
+  return <div ref={root} className={"testimonial-carousel paged-carousel " + className} role="region" aria-roledescription="Karussell" aria-label={label}>
     <div className="carousel-viewport"
       onPointerDown={event => {
         if (event.button !== 0 || !event.isPrimary) return;
@@ -86,17 +107,17 @@ function Testimonials() {
       onLostPointerCapture={() => { pointer.current = null; }}>
       <div className="carousel-track" style={{ transform: 'translateX(-' + active * 100 + '%)', transition: reduced ? 'none' : undefined }} aria-live="off">
         {Array.from({ length: pageCount }, (_, page) => <div className="carousel-slide" key={page} aria-hidden={page !== active} role="group" aria-label={(page + 1) + ' von ' + pageCount}>
-          <div className="testimonial-pair">{Array.from({ length: desktop ? 2 : 1 }, (_, offset) => {
+          <div className="testimonial-pair" style={{ '--carousel-columns': desktopCount }}>{Array.from({ length: desktop ? desktopCount : 1 }, (_, offset) => {
             const index = (page + offset) % pageCount;
-            return <figure key={exampleNames[index]}><span className="quote-mark"><Icon name="quote" size={32}/></span><blockquote>{exampleTexts[index]}</blockquote><figcaption>{exampleNames[index]} <span>— Beispiel</span></figcaption></figure>;
+            return <Card key={index} item={items[index]}/>;
           })}</div>
         </div>)}
       </div>
     </div>
     <div className="carousel-controls">
-      <button type="button" onClick={() => go(-1)} aria-label="Vorherige Kundenstimme"><Icon name="left"/></button>
+      <button type="button" onClick={() => go(-1)} aria-label={label + ": Zurück"}><Icon name="left"/></button>
       <div className="carousel-dots">{Array.from({ length: pageCount }, (_, index) => <button key={index} type="button" aria-label={'Ansicht ' + (index + 1)} aria-current={index === active ? 'true' : undefined} onClick={() => { setActive(index); setRestart(value => value + 1); }}><span/></button>)}</div>
-      <button type="button" onClick={() => go(1)} aria-label="Nächste Kundenstimme"><Icon name="right"/></button>
+      <button type="button" onClick={() => go(1)} aria-label={label + ": Weiter"}><Icon name="right"/></button>
       <button type="button" className="carousel-pause" aria-pressed={paused} onClick={() => setPaused(value => !value)}>{paused ? 'Abspielen' : 'Pause'}</button>
     </div>
   </div>;
@@ -252,7 +273,8 @@ function App() {
       <section className="hero section" id="start"><div><p className="eyebrow">BESTATTUNG & VORSORGE</p><h1>In schweren Zeiten.<br/><span>An Ihrer Seite.</span></h1><p className="lead">{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p className="fine">Bestattung · Vorsorge · Persönliches Gespräch</p></div><div className="hero-art"><img className="hero-angel" src="./hero-angel.webp" alt="" aria-hidden="true" width="480" height="320"/><img src="./placeholder.svg" width="600" height="660" alt="" fetchPriority="high"/><div className="art-caption"><span><Icon name="heart" size={32}/></span><p>Raum für Abschied.<br/><strong>Zeit für Erinnerung.</strong></p></div></div></section>
       <div className="trust-strip trust-benefits" aria-label="Unsere Werte">{[[UsersThree, 'Persönlich für Sie da'], [ShieldCheck, 'Vertrauensvoll & diskret'], [Leaf, 'Individuelle Gestaltung'], [Heart, 'Langjährige Erfahrung']].map(([BenefitIcon, label]) => <span key={label}><BenefitIcon size={28} aria-hidden="true"/>{label}</span>)}</div>
       <section className="section process" id="ablauf"><div className="section-heading"><p className="eyebrow">01 / ABLAUF</p><h2>Den Abschied gestalten.<br/>Schritt für Schritt.</h2><p>{lorem}</p></div><div className="steps">{['Erstes Gespräch', 'Persönliche Wünsche', 'Abschied & Begleitung'].map((title, index) => <article key={title}><span className="number">0{index + 1}</span><h3>{title}</h3><p>{lorem}</p><span className="step-line"><Icon name="arrow" size={24}/></span></article>)}</div><div className="section-action"><CTA/></div></section>
-      <section className="quotes section"><p className="eyebrow">02 / KUNDENSTIMMEN</p><h2>Worte der Erinnerung und Verbundenheit.</h2><Testimonials/></section>
+      <section className="section services-section" id="leistungen" aria-labelledby="services-title"><h2 id="services-title">Unsere Leistungen.</h2><ContentCarousel items={services} renderCard={ServiceCard} desktopCount={3} label="Bestattungsleistungen" className="services-carousel"/></section>
+      <section className="quotes section"><p className="eyebrow">02 / KUNDENSTIMMEN</p><h2>Worte der Erinnerung und Verbundenheit.</h2><ContentCarousel items={testimonials} renderCard={TestimonialCard} label="Kundenstimmen – sechs Beispiele"/></section>
       <section className="section collaboration" id="zusammenarbeit"><div className="section-heading"><p className="eyebrow">03 / ZUSAMMENARBEIT</p><h2>Persönlich. Einfühlsam.<br/>Für Sie da.</h2><p>{lorem}</p><CTA/></div><div className="features">{[[Handshake, 'Individuelle Begleitung'], [Heart, 'Transparente Abläufe'], [UsersThree, 'Langfristige Unterstützung']].map(([FeatureIcon, title]) => <article key={title}><FeatureIcon size={40} aria-hidden="true"/><div><h3>{title}</h3><p>{lorem}</p></div></article>)}</div></section>
       <section className="contact-cta" id="kontakt" aria-labelledby="contact-title"><div className="section contact-cta-grid"><div className="contact-pitch"><p className="eyebrow">04 / KONTAKT</p><h2 id="contact-title">Lassen Sie<br/>uns sprechen.</h2><p>{lorem}</p><a className="contact-phone" href={"tel:" + config.phone}><Phone size={32} aria-hidden="true"/><span>040 60 94 39 46</span></a><div className="actions"><button type="button" className="button calendly-button" onClick={() => contact('booking')}><CalendarBlank size={24} aria-hidden="true"/>Termin über Calendly buchen</button></div></div><ContactForm/></div></section>
       <LocationSection/>
@@ -262,4 +284,3 @@ function App() {
   </div>;
 }
 createRoot(document.getElementById('root')).render(<App/>);
-
