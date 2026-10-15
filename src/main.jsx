@@ -23,7 +23,7 @@ function App() {
   const CTA = ({ secondary = false }) => <button className={secondary ? 'button secondary' : 'button'} onClick={() => contact(secondary ? 'phone' : 'booking')}>{secondary ? 'Jetzt anrufen ↗' : 'Termin vereinbaren ↗'}</button>;
   return <>
     <a className="skip" href="#main">Zum Inhalt</a>
-    <header><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><span className="brand-icon" aria-hidden="true">✳</span>{config.name}<small>BESTATTUNGEN · ARBEITSPROBE</small></a>
+    <header><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841"/></a>
       <button className="menu" aria-expanded={menu} aria-controls="navigation" onClick={() => setMenu(!menu)}>Menü {menu ? '−' : '+'}</button>
       <nav id="navigation" className={menu ? 'open' : ''} aria-label="Hauptnavigation">{[['ablauf','Ablauf'],['zusammenarbeit','Zusammenarbeit'],['kontakt','Kontakt']].map(([id, label]) => <a key={id} href={'#'+id} onClick={() => setMenu(false)}>{label}</a>)}<CTA /></nav>
     </header>
@@ -35,7 +35,7 @@ function App() {
       <section className="section collaboration" id="zusammenarbeit"><div className="section-heading"><p className="eyebrow">03 / ZUSAMMENARBEIT</p><h2>Ein persönlicher Abschied.<br/><span>Ein bleibendes Andenken.</span></h2><p>{lorem}</p><CTA/></div><div className="features">{['Bestattungsarten', 'Trauerfeier & Erinnerung', 'Bestattungsvorsorge'].map((title, index) => <article key={title}><span>0{index + 1}</span><div><h3>{title}</h3><p>{lorem}</p></div></article>)}</div></section>
       <section className="contact section" id="kontakt"><p className="eyebrow">04 / KONTAKT</p><h2>Der erste Schritt:<br/>Ein persönliches Gespräch.</h2><p>{lorem}</p><div className="actions"><CTA/><CTA secondary/></div><p><a href={"tel:" + config.phone}>040 60 94 39 46</a></p><p><a href="mailto:mail@alstercloud.de">mail@alstercloud.de</a></p></section>
     </main>
-    <footer><a className="brand" href="#start">{config.name}</a><p>AlsterCloud © 2026 Alle Rechte vorbehalten.</p><a href="#kontakt">Kontakt ↑</a></footer>
+    <footer><a className="brand" href="#start" aria-label="AlsterCloud – Startseite"><img className="brand-logo" src="./AlsterCloud-Logo.png" alt="AlsterCloud" width="1000" height="841" loading="lazy"/></a><p>AlsterCloud © 2026 Alle Rechte vorbehalten.</p><a href="#kontakt">Kontakt ↑</a></footer>
     <dialog ref={dialog} onClose={() => previousFocus.current?.focus()} aria-labelledby="notice-title"><h2 id="notice-title">Vorschau</h2><p>{notice}</p><form method="dialog"><button className="button">Schließen</button></form></dialog>
   </>;
 }
