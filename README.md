@@ -68,4 +68,4 @@ Eine Nutzung, Vervielfältigung oder Weitergabe ist nur mit Zustimmung der jewei
 
 ---
 
-Entwickelt von AlsterCloud.
+Entwickelt von [AlsterCloud](https://www.alstercloud.de/).
