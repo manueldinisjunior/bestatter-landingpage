@@ -143,8 +143,7 @@ function App() {
       const end = Math.max(0, Math.min(start + target.getBoundingClientRect().top - offset,
         document.documentElement.scrollHeight - window.innerHeight));
       const distance = end - start;
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const duration = reduced ? 0 : Math.min(1600, Math.max(1100, Math.abs(distance) * 0.65));
+      const duration = Math.min(1600, Math.max(1100, Math.abs(distance) * 0.65));
       let started;
       function finish() {
         if (window.location.hash !== '#' + id) window.history.pushState(null, '', '#' + id);
