@@ -113,3 +113,11 @@ header > * { position: relative; }
 .testimonial-set { display: flex; flex: 0 0 auto; gap: 24px; padding-right: 24px; }
 .testimonial-set figure { flex: 0 0 auto; width: calc((100cqw - 24px) / 2); margin: 0; padding: clamp(24px,4vw,40px); }
 @media (max-width: 720px) { .testimonial-set figure { width: 100cqw; padding: 24px; } }
+
+/* JavaScript controls anchor timing consistently on desktop and mobile. */
+html { scroll-behavior: auto; }
+.paged-carousel .carousel-viewport { cursor: grab; touch-action: pan-y; user-select: none; }
+.paged-carousel .carousel-viewport:active { cursor: grabbing; }
+.paged-carousel .carousel-track { transition: transform 650ms cubic-bezier(.22,1,.36,1); }
+.paged-carousel .testimonial-pair { height: 100%; }
+@media (prefers-reduced-motion: reduce) { .paged-carousel .carousel-track { transition: none; } }
