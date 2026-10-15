@@ -1,29 +1,37 @@
 # Bestatter Landingpage
 
-Responsive Landingpage für ein Bestattungsunternehmen, erstellt als Arbeitsprobe nach dem Briefing von AlsterCloud. Besucher können sich über Leistungen informieren und Kontakt aufnehmen.
+Responsive Landingpage für ein Bestattungsunternehmen, erstellt als Arbeitsprobe nach dem Briefing von AlsterCloud. Besucher können Leistungen kennenlernen und Kontakt aufnehmen.
 
 [Live-Demo](https://manueldinisjunior.github.io/bestatter-landingpage/)
 
-## Design
+## Technologien und ihre Aufgaben
 
-- Ruhige Gestaltung mit Grün als Markenfarbe (`#00a98e`)
-- Cormorant Garamond für Überschriften und Fließtext, Bebas Neue für Navigation und Buttons
-- Bereitgestelltes AlsterCloud-Logo und KI-generierte Illustrationen
-- Responsive Darstellung für Desktop, Tablet und Smartphone
+| Technologie | Aufgabe im Projekt |
+|---|---|
+| HTML / JSX | Beschreibt den Aufbau der Seite: Überschriften, Abschnitte, Links und Formularfelder. JSX wird innerhalb der React-Komponenten verwendet. |
+| React | Teilt die Oberfläche in wiederverwendbare Komponenten auf und verwaltet Zustände, etwa das geöffnete Menü oder die aktuelle Karussellansicht. |
+| JavaScript | Steuert Interaktionen wie animiertes Scrollen, automatische Kartenwechsel und die Vorbereitung der Kontaktanfrage. |
+| CSS | Gestaltet Farben, Schriften, Abstände, responsive Layouts, Hover-Effekte und Animationen. |
+| Vite | Startet die lokale Entwicklungsumgebung und erstellt die optimierten Dateien für die Veröffentlichung. |
+| Phosphor Icons | Liefert Symbole für Telefon, Kalender, Bewertungen und soziale Netzwerke. |
+| Google Fonts | Lädt Cormorant Garamond für Überschriften und Fließtext sowie Bebas Neue für Navigation und Buttons. |
+| Git | Hält Änderungen am Code nachvollziehbar fest und ermöglicht den Vergleich früherer Versionen. |
+| GitHub | Speichert das Repository mit Quellcode und Dokumentation online. |
+| GitHub Actions | Installiert nach Änderungen auf `main` die Abhängigkeiten, führt Tests aus, erstellt den Build und veröffentlicht die Seite. |
+| GitHub Pages | Stellt die fertige Website im Internet bereit. |
+| Node.js und npm | Führen die Entwicklungswerkzeuge aus und installieren Abhängigkeiten. Die Website selbst benötigt kein Node.js-Backend. |
 
-## Funktionen
+## So funktioniert die Seite
 
-- Sticky Navigation mit animiertem Scrollen
-- Leistungs- und Kundenstimmen-Karussells mit automatischem Wechsel, Pfeilen und Wischgesten
-- Kontaktformular mit Auswahl der gewünschten Leistung
-- Telefon- und E-Mail-Kontakt sowie Terminbuchung über Calendly vorgesehen
-- Standortkarte, Google-Maps-Routenlink und Zurück-nach-oben-Button
+Die Navigation führt mit animiertem Scrollen zu den Abschnitten. Leistungen und beispielhafte Kundenstimmen werden in Karussells angezeigt. Auf dem Desktop sind mehrere Karten sichtbar, auf dem Smartphone jeweils eine.
 
-**Stand der Arbeitsprobe:** Das Formular bereitet eine Nachricht im E-Mail-Programm vor; direkter Versand und Calendly sind noch nicht eingerichtet. Rechtliche Links und Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen dienen als Beispiele.
+„Termin vereinbaren“ führt zum Kontaktbereich. Das Formular prüft die Pflichtfelder und bereitet über `mailto:` eine Nachricht im E-Mail-Programm vor. Besucher senden diese dort selbst ab. Es gibt keinen direkten Formularversand und keine Datenbank.
 
-## Tech Stack
+„Route planen“ öffnet Google Maps mit der angezeigten Adresse. Die Calendly-Schaltfläche ist für eine externe Terminbuchung vorbereitet; der Buchungslink ist noch nicht hinterlegt. Rechtliche Links und Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen dienen als Beispiele.
 
-React · Vite · CSS · Phosphor Icons · GitHub Actions · GitHub Pages
+## Gestaltung
+
+Ruhige Grüntöne mit der Markenfarbe `#00a98e`, das bereitgestellte AlsterCloud-Logo und eine responsive Darstellung für Desktop, Tablet und Smartphone.
 
 ## Lokal starten
 
@@ -34,9 +42,11 @@ npm install
 npm run dev
 ```
 
-Mit `npm run build` wird die Produktionsversion erstellt; `npm run preview` startet die lokale Vorschau.
-
-Mit `npm test` werden Rendering, interne Links und Formularstruktur geprüft.
+| Befehl | Aufgabe |
+|---|---|
+| `npm run build` | Produktionsversion erstellen |
+| `npm run preview` | Produktionsversion lokal ansehen |
+| `npm test` | Rendering, interne Linkziele und Formularstruktur prüfen |
 
 [Kurzer Projektüberblick](docs/projektbrief.md)
 
