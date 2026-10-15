@@ -243,7 +243,6 @@ export default function App() {
             ["ablauf", "Ablauf"],
             ["leistungen", "Leistungen"],
             ["zusammenarbeit", "Zusammenarbeit"],
-            ["kontakt", "Kontakt"],
           ].map(([id, label]) => (
             <a key={id} href={"#" + id}>
               {label}
