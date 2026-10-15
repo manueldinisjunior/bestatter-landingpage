@@ -88,3 +88,20 @@ footer > a:last-child { display: inline-flex; align-items: center; gap: 8px; }
 .menu { color: #00a98e; border-color: #00a98e; background: transparent; }
 .menu:hover, .menu[aria-expanded="true"] { background: #e4f5ef; }
 .menu:focus-visible { outline-color: #164d41; }
+
+/* Extend the sticky surface edge to edge without moving navigation. */
+header::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: calc((100% - 100vw) / 2);
+  right: calc((100% - 100vw) / 2);
+  background: #fafaf6;
+  box-shadow: 0 1px 0 #dce5dd, 0 8px 24px #163d3508;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+header.is-scrolled::before { opacity: 1; }
+header > * { position: relative; }
+@media (prefers-reduced-motion: reduce) { header::before { transition: none; } }
