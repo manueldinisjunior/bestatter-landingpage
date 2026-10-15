@@ -1,54 +1,62 @@
 # Bestatter Landingpage
 
-Responsive Landingpage für ein Bestattungsunternehmen, erstellt als Arbeitsprobe nach dem Briefing von AlsterCloud. Besucher können Leistungen kennenlernen und Kontakt aufnehmen.
+Responsive Onepager für ein Bestattungsunternehmen. Die Seite wurde als Arbeitsprobe nach dem Briefing von AlsterCloud umgesetzt.
 
 [Live-Demo](https://manueldinisjunior.github.io/bestatter-landingpage/)
 
-## Technologien und ihre Aufgaben
+## Überblick
 
-| Technologie | Aufgabe im Projekt |
+Die Seite stellt Leistungen, Ablauf und Kontaktmöglichkeiten vor. Die Gestaltung verwendet die Markenfarbe `#00a98e`, das bereitgestellte AlsterCloud-Logo sowie Cormorant Garamond und Bebas Neue.
+
+Der Aufbau folgt einer klaren Reihenfolge: Start, Ablauf, Leistungen, Kundenstimmen, Zusammenarbeit, Kontakt und Standort.
+
+## Funktionen
+
+- Sticky Navigation mit animiertem Scrollen zu den Abschnitten
+- Leistungs- und Kundenstimmen-Karussells mit automatischem Wechsel, Pfeilen und Wischgesten
+- Kontaktformular mit Leistungsauswahl und Pflichtfeldprüfung
+- Telefon- und E-Mail-Links sowie Google-Maps-Routenplanung
+- Vorbereitete Calendly-Anbindung und Zurück-nach-oben-Funktion
+- Responsive Layouts und Unterstützung für reduzierte Bewegung
+
+## Technische Umsetzung
+
+| Technologie | Einsatz |
 |---|---|
-| HTML / JSX | Beschreibt den Aufbau der Seite: Überschriften, Abschnitte, Links und Formularfelder. JSX wird innerhalb der React-Komponenten verwendet. |
-| React | Teilt die Oberfläche in wiederverwendbare Komponenten auf und verwaltet Zustände, etwa das geöffnete Menü oder die aktuelle Karussellansicht. |
-| JavaScript | Steuert Interaktionen wie animiertes Scrollen, automatische Kartenwechsel und die Vorbereitung der Kontaktanfrage. |
-| CSS | Gestaltet Farben, Schriften, Abstände, responsive Layouts, Hover-Effekte und Animationen. |
-| Vite | Startet die lokale Entwicklungsumgebung und erstellt die optimierten Dateien für die Veröffentlichung. |
-| Phosphor Icons | Liefert Symbole für Telefon, Kalender, Bewertungen und soziale Netzwerke. |
-| Google Fonts | Lädt Cormorant Garamond für Überschriften und Fließtext sowie Bebas Neue für Navigation und Buttons. |
-| Git | Hält Änderungen am Code nachvollziehbar fest und ermöglicht den Vergleich früherer Versionen. |
-| GitHub | Speichert das Repository mit Quellcode und Dokumentation online. |
-| GitHub Actions | Installiert nach Änderungen auf `main` die Abhängigkeiten, führt Tests aus, erstellt den Build und veröffentlicht die Seite. |
-| GitHub Pages | Stellt die fertige Website im Internet bereit. |
-| Node.js und npm | Führen die Entwicklungswerkzeuge aus und installieren Abhängigkeiten. Die Website selbst benötigt kein Node.js-Backend. |
+| React und JSX | Seitenstruktur, wiederverwendbare Komponenten und Zustände für Menü und Karussells |
+| JavaScript | Navigation, Kartenwechsel und Vorbereitung der Kontaktanfrage |
+| CSS | Layout, Typografie, responsive Darstellung und Animationen |
+| Vite | Lokaler Entwicklungsserver und optimierter Produktionsbuild |
+| Phosphor Icons | Symbole für Aktionen, Leistungen und Bewertungen |
+| Google Fonts | Bereitstellung von Cormorant Garamond und Bebas Neue |
+| Git und GitHub | Versionsverwaltung und Quellcode-Repository |
+| GitHub Actions und Pages | Automatische Tests, Build und Veröffentlichung |
+| Node.js und npm | Ausführung der Entwicklungswerkzeuge und Installation der Abhängigkeiten |
 
-## So funktioniert die Seite
+Die Anwendung ist als statisches Frontend ohne Backend und Datenbank aufgebaut. Komponenten, Inhalte und Kontaktangaben sind getrennt organisiert.
 
-Die Navigation führt mit animiertem Scrollen zu den Abschnitten. Leistungen und beispielhafte Kundenstimmen werden in Karussells angezeigt. Auf dem Desktop sind mehrere Karten sichtbar, auf dem Smartphone jeweils eine.
+## Entwicklung
 
-„Termin vereinbaren“ führt zum Kontaktbereich. Das Formular prüft die Pflichtfelder und bereitet über `mailto:` eine Nachricht im E-Mail-Programm vor. Besucher senden diese dort selbst ab. Es gibt keinen direkten Formularversand und keine Datenbank.
-
-„Route planen“ öffnet Google Maps mit der angezeigten Adresse. Die Calendly-Schaltfläche ist für eine externe Terminbuchung vorbereitet; der Buchungslink ist noch nicht hinterlegt. Rechtliche Links und Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen dienen als Beispiele.
-
-## Gestaltung
-
-Ruhige Grüntöne mit der Markenfarbe `#00a98e`, das bereitgestellte AlsterCloud-Logo und eine responsive Darstellung für Desktop, Tablet und Smartphone.
-
-## Lokal starten
-
-Voraussetzung: Node.js 22 und npm.
+Voraussetzungen: Node.js 22 und npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-| Befehl | Aufgabe |
+| Befehl | Beschreibung |
 |---|---|
-| `npm run build` | Produktionsversion erstellen |
-| `npm run preview` | Produktionsversion lokal ansehen |
 | `npm test` | Rendering, interne Linkziele und Formularstruktur prüfen |
+| `npm run build` | Produktionsbuild erstellen |
+| `npm run preview` | Produktionsbuild lokal ansehen |
 
-[Kurzer Projektüberblick](docs/projektbrief.md)
+Änderungen auf `main` werden über GitHub Actions geprüft, gebaut und auf GitHub Pages veröffentlicht.
+
+## Stand der Arbeitsprobe
+
+Das Kontaktformular bereitet eine E-Mail im lokalen E-Mail-Programm vor. Der Versand erfolgt dort durch den Besucher. Der Calendly-Link ist noch nicht konfiguriert; rechtliche Links und Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen sind Beispiele.
+
+[Projektüberblick](docs/projektbrief.md)
 
 ## Bildnachweise
 
