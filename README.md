@@ -7,7 +7,7 @@ Responsive Onepager für ein Bestattungsunternehmen, erstellt als Arbeitsprobe n
 ## Designanforderungen
 
 - Corporate Color: `#00a98e`
-- Schriftarten: PT Sans und Bebas Neue gemäß Briefing
+- Schriftarten: Cormorant Garamond für Überschriften und Fließtext, Bebas Neue für Navigation und Buttons
 - Bereitgestelltes AlsterCloud-Logo
 - Ruhige Gestaltung mit klarer Struktur und großzügigen Abständen
 - Responsive Darstellung für Desktop, Tablet und Smartphone
