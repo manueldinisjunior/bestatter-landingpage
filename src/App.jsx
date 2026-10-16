@@ -452,7 +452,7 @@ export default function App() {
                 </button>
               </div>
             </div>
-            <ContactForm onOpenPrivacy={() => openLegalNotice("privacy")} />
+            <ContactForm onOpenPrivacy={() => openLegalNotice("contactPrivacy")} />
           </div>
         </section>
         <LocationSection />

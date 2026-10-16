@@ -86,7 +86,7 @@ test("footer information uses dialog buttons and labels example legal content", 
       title,
     );
   }
-  for (const key of ["imprint", "privacy"]) {
+  for (const key of ["imprint", "privacy", "contactPrivacy"]) {
     const body = renderToStaticMarkup(legalNotices[key].content);
     assert.ok(body.includes("Beispieltext"));
   }
@@ -114,4 +114,20 @@ test("privacy controls offer equal choices and keep acknowledgement separate", a
   assert.ok(panel.includes('id="privacy-options" hidden=""'));
   assert.ok(panel.includes("Nicht verwendet"));
   assert.ok(html.includes('aria-labelledby="privacy-ack-label"'));
+});
+
+
+test("contact privacy explains form data separately from browsing preferences", async () => {
+  const { legalNotices } = await server.ssrLoadModule("/src/legalNotices.jsx");
+  const contact = renderToStaticMarkup(legalNotices.contactPrivacy.content);
+  const browsing = renderToStaticMarkup(legalNotices.privacy.content);
+  assert.ok(contact.includes("E-Mail-Programm"));
+  assert.ok(contact.includes("Telefonnummer"));
+  assert.ok(!contact.includes("Cookies"));
+  assert.ok(!contact.includes("Google Fonts"));
+  assert.ok(browsing.includes("GitHub Pages"));
+  assert.ok(browsing.includes("Google Fonts"));
+  assert.ok(browsing.includes("Cookie-Auswahl"));
+  assert.ok(!browsing.includes("Kontaktanfragen"));
+  assert.ok(!browsing.includes("Das Formular"));
 });

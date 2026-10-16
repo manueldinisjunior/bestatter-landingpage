@@ -31,6 +31,43 @@ export const legalNotices = {
       </>
     ),
   },
+  contactPrivacy: {
+    title: "Datenschutz bei Kontaktanfragen",
+    content: (
+      <>
+        <p className="dialog-note">
+          Beispieltext für diese Arbeitsprobe; keine vollständige
+          Datenschutzerklärung.
+        </p>
+        <h3>Welche Angaben werden verwendet?</h3>
+        <p>
+          Das Formular verwendet Ihren Namen, Ihre E-Mail-Adresse, Ihr Anliegen
+          und Ihre Nachricht. Eine Telefonnummer können Sie freiwillig angeben.
+          Diese Angaben dienen dazu, Ihre Anfrage zu beantworten und Sie auf
+          dem gewünschten Weg zu kontaktieren.
+        </p>
+        <h3>Wie wird Ihre Anfrage versendet?</h3>
+        <p>
+          Das Formular bereitet eine E-Mail mit Ihren Angaben in Ihrem eigenen
+          E-Mail-Programm vor. Erst wenn Sie die Nachricht dort absenden,
+          wird sie an den angegebenen Kontakt übermittelt. Die Anwendung
+          speichert Ihre Eingaben nicht in einer eigenen Datenbank.
+        </p>
+        <h3>Nach dem Versand</h3>
+        <p>
+          Die versendete Nachricht wird über die beteiligten E-Mail-Anbieter
+          verarbeitet und kann im Postfach des Empfängers gespeichert werden.
+          Für die Bearbeitung und Aufbewahrung der Anfrage ist der Empfänger
+          verantwortlich.
+        </p>
+        <p>
+          Vor einer echten Veröffentlichung werden die Angaben zum
+          Verantwortlichen, zur Speicherdauer und zu Ihren Datenschutzrechten
+          ergänzt.
+        </p>
+      </>
+    ),
+  },
   privacy: {
     title: "Datenschutz & Cookies",
     content: (
@@ -39,12 +76,12 @@ export const legalNotices = {
           Beispieltext für diese Arbeitsprobe; keine vollständige
           Datenschutzerklärung.
         </p>
-        <h3>Kontaktanfragen</h3>
+        <h3>Beim Besuch dieser Website</h3>
         <p>
-          Das Formular bereitet Ihre Angaben und Nachricht in Ihrem
-          E-Mail-Programm vor. Sie entscheiden dort, ob Sie die Nachricht
-          absenden. Die Anwendung speichert Ihre Eingaben nicht in einer eigenen
-          Datenbank.
+          Diese Hinweise betreffen die Nutzung der Website und Ihre
+          Privatsphäre beim Surfen. Die Seite wird über GitHub Pages
+          bereitgestellt. Dabei können technische Verbindungsdaten wie Ihre
+          IP-Adresse beim Hosting-Anbieter verarbeitet werden.
         </p>
         <h3>Externe Dienste</h3>
         <p>
