@@ -74,12 +74,44 @@ test("carousels expose ratings and hide inactive copies from assistive technolog
 
 test("footer information uses dialog buttons and labels example legal content", async () => {
   const { legalNotices } = await server.ssrLoadModule("/src/legalNotices.jsx");
-  for (const title of ["Impressum", "Datenschutz &amp; Cookies", "Bildnachweise"]) {
-    assert.ok(new RegExp(`<button[^>]*aria-haspopup="dialog"[^>]*>${title}</button>`).test(html), title);
+  for (const title of [
+    "Impressum",
+    "Datenschutz &amp; Cookies",
+    "Bildnachweise",
+  ]) {
+    assert.ok(
+      new RegExp(
+        `<button[^>]*aria-haspopup="dialog"[^>]*>${title}</button>`,
+      ).test(html),
+      title,
+    );
   }
   for (const key of ["imprint", "privacy"]) {
     const body = renderToStaticMarkup(legalNotices[key].content);
     assert.ok(body.includes("Beispieltext"));
   }
-  assert.ok(renderToStaticMarkup(legalNotices.credits.content).includes("AlsterCloud-Logo"));
+  assert.ok(
+    renderToStaticMarkup(legalNotices.credits.content).includes(
+      "AlsterCloud-Logo",
+    ),
+  );
+});
+
+test("privacy controls offer equal choices and keep acknowledgement separate", async () => {
+  const { default: PrivacySettings } = await server.ssrLoadModule(
+    "/src/components/PrivacySettings.jsx",
+  );
+  const panel = renderToStaticMarkup(
+    React.createElement(PrivacySettings, { onClose() {} }),
+  );
+  for (const title of ["Alle akzeptieren", "Konfigurieren", "Alle ablehnen"]) {
+    assert.ok(
+      new RegExp(
+        `<button[^>]*class="button secondary"[^>]*>${title}</button>`,
+      ).test(panel),
+    );
+  }
+  assert.ok(panel.includes('id="privacy-options" hidden=""'));
+  assert.ok(panel.includes("Nicht verwendet"));
+  assert.ok(html.includes('aria-labelledby="privacy-ack-label"'));
 });

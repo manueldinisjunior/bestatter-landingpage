@@ -1499,3 +1499,79 @@ dialog {
 .privacy-check .footer-link {
   text-align: left;
 }
+
+/* Equal-weight privacy choices; stack comfortably on narrow displays. */
+.privacy-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 24px 0;
+}
+.privacy-actions .button {
+  padding: 12px 10px;
+  font-family: "PT Sans", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.privacy-summary,
+.privacy-saved {
+  font-size: 14px;
+}
+.privacy-saved {
+  padding: 12px;
+  background: #e9f1eb;
+  border-radius: 5px;
+}
+.privacy-category {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #dce5dd;
+}
+.privacy-category p {
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+.privacy-badge {
+  font-size: 12px;
+  white-space: nowrap;
+  color: #24574b;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: #e9f1eb;
+}
+.privacy-save {
+  margin-top: 8px;
+}
+.privacy-error {
+  padding: 12px;
+  color: #702c20;
+  background: #fff0e9;
+  border-radius: 5px;
+}
+.privacy-details {
+  margin: 24px 0;
+}
+.privacy-details summary {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding-block: 8px;
+}
+.privacy-details summary:focus-visible {
+  outline: 3px solid #725300;
+  outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .privacy-actions {
+    grid-template-columns: 1fr;
+  }
+  .privacy-category {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

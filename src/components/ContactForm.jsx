@@ -79,21 +79,29 @@ export default function ContactForm({ onOpenPrivacy }) {
           />
         </label>
       </div>
-      <label className="privacy-check">
-        <input type="checkbox" required />
-        <span>
-          Ich habe die{" "}
+      <div className="privacy-check">
+        <input
+          id="privacy-ack"
+          type="checkbox"
+          required
+          aria-labelledby="privacy-ack-label"
+        />
+        <span id="privacy-ack-label">
+          <label htmlFor="privacy-ack">Ich habe die </label>
           <button
             type="button"
             className="footer-link"
             aria-haspopup="dialog"
-            onClick={onOpenPrivacy}
+            onClick={(event) => {
+              event.preventDefault();
+              onOpenPrivacy();
+            }}
           >
             Datenschutzerklärung
-          </button>{" "}
-          gelesen.
+          </button>
+          <label htmlFor="privacy-ack"> gelesen.</label>
         </span>
-      </label>
+      </div>
       <button type="submit" className="button">
         Nachricht senden <Icon name="arrow" size={18} />
       </button>

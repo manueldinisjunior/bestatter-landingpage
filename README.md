@@ -54,7 +54,7 @@ npm run dev
 
 ## Stand der Arbeitsprobe
 
-Das Kontaktformular bereitet eine E-Mail im lokalen E-Mail-Programm vor. Der Versand erfolgt dort durch den Besucher. Der Calendly-Link ist noch nicht konfiguriert. Impressum und Datenschutz sind als Beispieltexte in Popups umgesetzt; Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen sind Beispiele.
+Das Kontaktformular bereitet eine E-Mail im lokalen E-Mail-Programm vor. Der Versand erfolgt dort durch den Besucher. Der Calendly-Link ist noch nicht konfiguriert. Impressum und Datenschutz sind als Beispieltexte in Popups umgesetzt. Cookie-Einstellungen lassen sich lokal speichern; Analyse und Marketing sind nicht eingebunden. Social-Media-Ziele sind Platzhalter. Texte und Kundenstimmen sind Beispiele.
 
 [Projektüberblick](docs/projektbrief.md)
 

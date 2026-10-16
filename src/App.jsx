@@ -21,6 +21,7 @@ import ServiceCard from "./components/ServiceCard";
 import ContactForm from "./components/ContactForm";
 import LocationSection from "./components/LocationSection";
 import SiteFooter from "./components/SiteFooter";
+import PrivacySettings from "./components/PrivacySettings";
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -59,6 +60,8 @@ export default function App() {
   const [notice, setNotice] = useState("");
   const [noticeTitle, setNoticeTitle] = useState("Vorschau");
   const dialog = useRef(null);
+  const backdropPress = useRef(false);
+  const dialogSequence = useRef(0);
   const previousFocus = useRef(null);
 
   const menuButton = useRef(null);
@@ -197,6 +200,7 @@ export default function App() {
   function openNotice(title, content) {
     previousFocus.current = document.activeElement;
     flushSync(() => {
+      backdropPress.current = false;
       setNoticeTitle(title);
       setNotice(content);
     });
@@ -204,7 +208,17 @@ export default function App() {
   }
   function openLegalNotice(key) {
     const entry = legalNotices[key];
-    openNotice(entry.title, entry.content);
+    openNotice(
+      entry.title,
+      key === "privacy" ? (
+        <PrivacySettings
+          key={++dialogSequence.current}
+          onClose={() => dialog.current.close()}
+        />
+      ) : (
+        entry.content
+      ),
+    );
   }
   function handleAnchorClick(event) {
     const anchor = event.target.closest('a[href^="#"]');
@@ -448,6 +462,31 @@ export default function App() {
         ref={dialog}
         onClose={() => previousFocus.current?.focus()}
         aria-labelledby="notice-title"
+        onPointerDown={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          backdropPress.current =
+            event.target === event.currentTarget &&
+            (event.clientX < rect.left ||
+              event.clientX > rect.right ||
+              event.clientY < rect.top ||
+              event.clientY > rect.bottom);
+        }}
+        onClick={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          const outside =
+            event.clientX < rect.left ||
+            event.clientX > rect.right ||
+            event.clientY < rect.top ||
+            event.clientY > rect.bottom;
+          if (
+            backdropPress.current &&
+            event.target === event.currentTarget &&
+            outside
+          ) {
+            event.currentTarget.close();
+          }
+          backdropPress.current = false;
+        }}
       >
         <h2 id="notice-title">{noticeTitle}</h2>
         <div className="dialog-content">{notice}</div>

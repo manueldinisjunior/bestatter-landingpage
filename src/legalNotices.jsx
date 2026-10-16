@@ -55,8 +55,9 @@ export const legalNotices = {
         <h3>Cookies</h3>
         <p>
           Die Arbeitsprobe bindet im Anwendungscode keine Analyse- oder
-          Marketing-Cookies ein. Bei externen Diensten gelten die dortigen
-          Datenschutzhinweise.
+          Marketing-Cookies ein. Ihre Cookie-Auswahl wird lokal in diesem
+          Browser gespeichert und kann jederzeit geändert werden. Bei externen
+          Diensten gelten die dortigen Datenschutzhinweise.
         </p>
         <p>
           Vor einer echten Veröffentlichung werden Angaben zum Verantwortlichen,
