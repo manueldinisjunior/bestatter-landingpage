@@ -1555,3 +1555,24 @@ dialog {
     gap: 8px;
   }
 }
+
+/* Decorative angel stays attached to the hero illustration. */
+.hero-art > .hero-angel {
+  position: absolute;
+  z-index: 1;
+  top: -24px;
+  right: -12px;
+  width: clamp(88px, 10vw, 136px);
+  height: auto;
+  max-height: none;
+  border-radius: 0;
+  object-fit: contain;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .hero-art > .hero-angel {
+    top: -16px;
+    right: 0;
+    width: 96px;
+  }
+}
