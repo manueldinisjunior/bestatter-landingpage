@@ -1589,3 +1589,11 @@ dialog {
     transform: translateY(-2px);
   }
 }
+
+.paged-carousel .carousel-viewport.is-dragging {
+  cursor: grabbing;
+}
+.paged-carousel .is-dragging .service-card,
+.paged-carousel .is-dragging figure {
+  transform: none;
+}
