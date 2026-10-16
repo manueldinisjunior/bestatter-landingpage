@@ -1570,3 +1570,22 @@ dialog {
     width: 96px;
   }
 }
+
+/* Match the secondary buttons without suggesting a clickable card. */
+.service-card,
+.carousel-slide figure {
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.carousel-viewport {
+  padding-block: 2px;
+  margin-block: -2px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover,
+  .carousel-slide figure:hover {
+    background: #e1f0e9;
+    transform: translateY(-2px);
+  }
+}
