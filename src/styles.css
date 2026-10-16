@@ -173,8 +173,7 @@ p {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 0;
-  max-height: 560px;
+  border-radius: 160px 160px 8px 8px;
   object-fit: contain;
 }
 .art-caption {

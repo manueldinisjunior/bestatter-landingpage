@@ -305,8 +305,8 @@ export default function App() {
             <img
               className="hero-illustration"
               src="./hero-chapel.webp"
-              width="1086"
-              height="1448"
+              width="1196"
+              height="1315"
               alt=""
               fetchPriority="high"
             />
