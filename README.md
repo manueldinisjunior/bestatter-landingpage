@@ -64,10 +64,10 @@ Die Illustrationen wurden mit KI generiert. Das AlsterCloud-Logo wurde bereitges
 
 ## Lizenz
 
-© 2026 AlsterCloud. Alle Rechte vorbehalten.
+Für dieses Repository wurde keine Open-Source-Lizenz vergeben. Das bereitgestellte AlsterCloud-Logo bleibt Eigentum des jeweiligen Rechteinhabers.
 
 Eine Nutzung, Vervielfältigung oder Weitergabe ist nur mit Zustimmung der jeweiligen Rechteinhaber gestattet.
 
 ---
 
-Entwickelt von [AlsterCloud](https://www.alstercloud.de/).
+Entwickelt von [Manuel Dinis Júnior](https://manueldinisjunior.de/) als Arbeitsprobe für AlsterCloud.
