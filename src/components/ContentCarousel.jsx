@@ -11,6 +11,7 @@ export default function ContentCarousel({
 }) {
   const root = useRef(null);
   const pointer = useRef(null);
+  const nextDelay = useRef(4000);
   const [active, setActive] = useState(0);
   const [desktop, setDesktop] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -18,19 +19,14 @@ export default function ContentCarousel({
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const pageCount = items.length;
-  const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const desktopMedia = window.matchMedia("(min-width: 721px)");
-    const motionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
     const layout = () => {
       setDesktop(desktopMedia.matches);
       setActive(0);
     };
-    const motion = () => setReduced(motionMedia.matches);
     layout();
-    motion();
     desktopMedia.addEventListener("change", layout);
-    motionMedia.addEventListener("change", motion);
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
       { threshold: 0.2 },
@@ -39,19 +35,24 @@ export default function ContentCarousel({
     return () => {
       observer.disconnect();
       desktopMedia.removeEventListener("change", layout);
-      motionMedia.removeEventListener("change", motion);
     };
   }, []);
   useEffect(() => {
-    if (!visible || reduced || hovered || focused) return;
+    if (!visible) {
+      nextDelay.current = 4000;
+      return;
+    }
+    if (hovered || focused) return;
     const timer = window.setTimeout(() => {
       if (!document.hidden && !pointer.current) {
+        nextDelay.current = 5000;
         setActive((index) => (index + 1) % pageCount);
       } else setRestart((value) => value + 1);
-    }, 6000);
+    }, nextDelay.current);
     return () => window.clearTimeout(timer);
-  }, [visible, active, pageCount, restart, reduced, hovered, focused]);
+  }, [visible, active, pageCount, restart, hovered, focused]);
   function go(direction) {
+    nextDelay.current = 5000;
     setActive((index) => (index + direction + pageCount) % pageCount);
     setRestart((value) => value + 1);
   }
@@ -71,11 +72,10 @@ export default function ContentCarousel({
       role="region"
       aria-roledescription="Karussell"
       aria-label={label}
-      onPointerEnter={(event) => {
-        if (event.pointerType === "mouse") setHovered(true);
+      onFocusCapture={(event) => {
+        // Keyboard focus pauses reading; mouse clicks must not stop rotation.
+        setFocused(event.target.matches(":focus-visible"));
       }}
-      onPointerLeave={() => setHovered(false)}
-      onFocusCapture={() => setFocused(true)}
       onBlurCapture={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget))
           setFocused(false);
@@ -91,6 +91,10 @@ export default function ContentCarousel({
     >
       <div
         className="carousel-viewport"
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse") setHovered(true);
+        }}
+        onPointerLeave={() => setHovered(false)}
         onPointerDown={(event) => {
           if (event.button !== 0 || !event.isPrimary) return;
           pointer.current = { id: event.pointerId, x: event.clientX };
@@ -109,7 +113,6 @@ export default function ContentCarousel({
           className="carousel-track"
           style={{
             transform: "translateX(-" + active * 100 + "%)",
-            transition: reduced ? "none" : undefined,
           }}
           aria-live="off"
         >
@@ -154,6 +157,7 @@ export default function ContentCarousel({
               aria-label={"Ansicht " + (index + 1)}
               aria-current={index === active ? "true" : undefined}
               onClick={() => {
+                nextDelay.current = 5000;
                 setActive(index);
                 setRestart((value) => value + 1);
               }}

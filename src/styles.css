@@ -494,7 +494,7 @@ footer .brand-logo {
 
 .testimonial-carousel {
   margin-top: 32px;
-  max-width: 800px;
+  max-width: none;
 }
 .carousel-viewport {
   overflow: hidden;
@@ -564,9 +564,6 @@ footer .brand-logo {
   }
 }
 
-.testimonial-carousel {
-  max-width: none;
-}
 .testimonial-pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -688,9 +685,6 @@ html {
 }
 .paged-carousel .carousel-track {
   transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.paged-carousel .testimonial-pair {
-  height: 100%;
 }
 @media (prefers-reduced-motion: reduce) {
   .paged-carousel .carousel-track {
