@@ -15,6 +15,7 @@ export default function ContentCarousel({
   const [active, setActive] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [heldCard, setHeldCard] = useState(null);
   const [desktop, setDesktop] = useState(false);
   const [visible, setVisible] = useState(false);
   const [restart, setRestart] = useState(0);
@@ -59,6 +60,7 @@ export default function ContentCarousel({
     setRestart((value) => value + 1);
   }
   function resetDrag() {
+    setHeldCard(null);
     pointer.current = null;
     setDragOffset(0);
     setDragging(false);
@@ -134,6 +136,7 @@ export default function ContentCarousel({
         onPointerLeave={() => setHovered(false)}
         onPointerDown={(event) => {
           if (event.button !== 0 || !event.isPrimary || pointer.current) return;
+          setHeldCard(event.target.closest("[data-carousel-card]")?.dataset.carouselCard ?? null);
           pointer.current = {
             id: event.pointerId,
             x: event.clientX,
@@ -174,7 +177,15 @@ export default function ContentCarousel({
                   { length: desktop ? desktopCount : 1 },
                   (_, offset) => {
                     const index = (page + offset) % pageCount;
-                    return <Card key={index} item={items[index]} />;
+                    const cardId = `${page}:${offset}`;
+                    return (
+                      <Card
+                        key={index}
+                        item={items[index]}
+                        cardId={cardId}
+                        held={heldCard === cardId}
+                      />
+                    );
                   },
                 )}
               </div>

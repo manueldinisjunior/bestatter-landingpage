@@ -27,9 +27,9 @@ function Rating({ value }) {
     </span>
   );
 }
-export default function TestimonialCard({ item }) {
+export default function TestimonialCard({ item, cardId, held = false }) {
   return (
-    <figure>
+    <figure className={held ? "is-held" : undefined} data-carousel-card={cardId}>
       <span className="quote-mark">
         <Icon name="quote" size={32} />
       </span>

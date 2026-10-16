@@ -1593,7 +1593,19 @@ dialog {
 .paged-carousel .carousel-viewport.is-dragging {
   cursor: grabbing;
 }
-.paged-carousel .is-dragging .service-card,
-.paged-carousel .is-dragging figure {
-  transform: none;
+
+.service-card.is-held,
+.carousel-slide figure.is-held {
+  background: #e1f0e9;
+  transform: translateY(-2px);
+}
+/* Keep the same gutter between pages as between cards within a page. */
+.paged-carousel {
+  --carousel-gap: clamp(16px, 2vw, 24px);
+}
+.paged-carousel .carousel-track {
+  width: calc(100% + var(--carousel-gap));
+}
+.paged-carousel .carousel-slide {
+  padding-right: var(--carousel-gap);
 }
