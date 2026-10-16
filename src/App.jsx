@@ -1,3 +1,4 @@
+import heroIllustration from "./assets/hero-chapel.webp";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
@@ -312,7 +313,7 @@ export default function App() {
             />
             <img
               className="hero-illustration"
-              src="./hero-chapel.webp"
+              src={heroIllustration}
               width="1196"
               height="1315"
               alt=""
