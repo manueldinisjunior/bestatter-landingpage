@@ -11,6 +11,7 @@ import {
   Phone,
 } from "@phosphor-icons/react";
 import { config } from "./config";
+import { legalNotices } from "./legalNotices";
 import { lorem, services, testimonials } from "./content";
 import Icon from "./components/Icon";
 import CTA from "./components/CTA";
@@ -56,6 +57,7 @@ export default function App() {
   }, []);
   const [menu, setMenu] = useState(false);
   const [notice, setNotice] = useState("");
+  const [noticeTitle, setNoticeTitle] = useState("Vorschau");
   const dialog = useRef(null);
   const previousFocus = useRef(null);
 
@@ -146,7 +148,10 @@ export default function App() {
         ),
       );
       const distance = end - start;
-      const duration = Math.min(1800, Math.max(1300, Math.abs(distance) * 0.65));
+      const duration = Math.min(
+        1800,
+        Math.max(1300, Math.abs(distance) * 0.65),
+      );
       let started;
       function finish() {
         if (window.location.hash !== "#" + id)
@@ -180,13 +185,26 @@ export default function App() {
         window.open(target, "_blank", "noopener,noreferrer");
       return;
     }
-    previousFocus.current = document.activeElement;
-    setNotice(
-      type === "phone"
-        ? "Die Telefonnummer wird für die finale Version ergänzt."
-        : "Der Calendly-Link wird für die finale Version ergänzt.",
+    openNotice(
+      "Vorschau",
+      <p>
+        {type === "phone"
+          ? "Die Telefonnummer wird für die finale Version ergänzt."
+          : "Der Calendly-Link wird für die finale Version ergänzt."}
+      </p>,
     );
+  }
+  function openNotice(title, content) {
+    previousFocus.current = document.activeElement;
+    flushSync(() => {
+      setNoticeTitle(title);
+      setNotice(content);
+    });
     dialog.current.showModal();
+  }
+  function openLegalNotice(key) {
+    const entry = legalNotices[key];
+    openNotice(entry.title, entry.content);
   }
   function handleAnchorClick(event) {
     const anchor = event.target.closest('a[href^="#"]');
@@ -420,19 +438,19 @@ export default function App() {
                 </button>
               </div>
             </div>
-            <ContactForm />
+            <ContactForm onOpenPrivacy={() => openLegalNotice("privacy")} />
           </div>
         </section>
         <LocationSection />
       </main>
-      <SiteFooter />
+      <SiteFooter onOpenNotice={openLegalNotice} />
       <dialog
         ref={dialog}
         onClose={() => previousFocus.current?.focus()}
         aria-labelledby="notice-title"
       >
-        <h2 id="notice-title">Vorschau</h2>
-        <p>{notice}</p>
+        <h2 id="notice-title">{noticeTitle}</h2>
+        <div className="dialog-content">{notice}</div>
         <form method="dialog">
           <button className="button">Schließen</button>
         </form>

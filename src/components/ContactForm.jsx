@@ -5,7 +5,7 @@ import { services } from "../content";
 import Icon from "./Icon";
 
 const funeralServices = services.map((service) => service.title);
-export default function ContactForm() {
+export default function ContactForm({ onOpenPrivacy }) {
   const [status, setStatus] = useState("");
   function submit(event) {
     event.preventDefault();
@@ -83,9 +83,14 @@ export default function ContactForm() {
         <input type="checkbox" required />
         <span>
           Ich habe die{" "}
-          <a href="#" onClick={(event) => event.preventDefault()}>
+          <button
+            type="button"
+            className="footer-link"
+            aria-haspopup="dialog"
+            onClick={onOpenPrivacy}
+          >
             Datenschutzerklärung
-          </a>{" "}
+          </button>{" "}
           gelesen.
         </span>
       </label>

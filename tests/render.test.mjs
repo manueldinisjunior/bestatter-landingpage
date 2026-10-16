@@ -71,3 +71,15 @@ test("carousels expose ratings and hide inactive copies from assistive technolog
     2,
   );
 });
+
+test("footer information uses dialog buttons and labels example legal content", async () => {
+  const { legalNotices } = await server.ssrLoadModule("/src/legalNotices.jsx");
+  for (const title of ["Impressum", "Datenschutz &amp; Cookies", "Bildnachweise"]) {
+    assert.ok(new RegExp(`<button[^>]*aria-haspopup="dialog"[^>]*>${title}</button>`).test(html), title);
+  }
+  for (const key of ["imprint", "privacy"]) {
+    const body = renderToStaticMarkup(legalNotices[key].content);
+    assert.ok(body.includes("Beispieltext"));
+  }
+  assert.ok(renderToStaticMarkup(legalNotices.credits.content).includes("AlsterCloud-Logo"));
+});

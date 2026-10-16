@@ -8,7 +8,7 @@ import {
 } from "@phosphor-icons/react";
 import { config } from "../config";
 
-export default function SiteFooter() {
+export default function SiteFooter({ onOpenNotice }) {
   const [notice, setNotice] = useState("");
   return (
     <footer className="site-footer">
@@ -55,20 +55,27 @@ export default function SiteFooter() {
       <div className="footer-bottom">
         <p>{config.name} © 2026 Alle Rechte vorbehalten.</p>
         <nav aria-label="Footer">
-          <a href="#" onClick={(event) => event.preventDefault()}>
-            Impressum
-          </a>
-          <a href="#" onClick={(event) => event.preventDefault()}>
-            Datenschutz &amp; Cookies
-          </a>
           <button
             type="button"
             className="footer-link"
-            onClick={() =>
-              setNotice(
-                "Die Bilder dieser Arbeitsprobe wurden mit KI generiert.",
-              )
-            }
+            aria-haspopup="dialog"
+            onClick={() => onOpenNotice("imprint")}
+          >
+            Impressum
+          </button>
+          <button
+            type="button"
+            className="footer-link"
+            aria-haspopup="dialog"
+            onClick={() => onOpenNotice("privacy")}
+          >
+            Datenschutz &amp; Cookies
+          </button>
+          <button
+            type="button"
+            className="footer-link"
+            aria-haspopup="dialog"
+            onClick={() => onOpenNotice("credits")}
           >
             Bildnachweise
           </button>
