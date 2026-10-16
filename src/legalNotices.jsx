@@ -110,7 +110,7 @@ export const legalNotices = {
         <h3>Illustrationen</h3>
         <p>
           Die Bilder dieser Arbeitsprobe wurden mit KI generiert. Dazu gehören
-          die Landschaftsillustration, der dekorative Engel und die illustrative
+          die Kapellenillustration im Startbereich und die illustrative
           Standortkarte.
         </p>
         <h3>Logo</h3>

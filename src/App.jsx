@@ -303,17 +303,10 @@ export default function App() {
           </div>
           <div className="hero-art">
             <img
-              className="hero-angel"
-              src="./hero-angel.webp"
-              alt=""
-              aria-hidden="true"
-              width="480"
-              height="320"
-            />
-            <img
-              src="./placeholder.svg"
-              width="600"
-              height="660"
+              className="hero-illustration"
+              src="./hero-chapel.webp"
+              width="1086"
+              height="1448"
               alt=""
               fetchPriority="high"
             />

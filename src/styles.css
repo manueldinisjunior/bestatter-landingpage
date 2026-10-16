@@ -169,11 +169,13 @@ p {
 .hero-art {
   position: relative;
 }
-.hero-art img {
+.hero-art > .hero-illustration {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 160px 160px 8px 8px;
+  border-radius: 0;
+  max-height: 560px;
+  object-fit: contain;
 }
 .art-caption {
   position: absolute;
@@ -365,9 +367,9 @@ dialog h2 {
     width: 100%;
     margin: auto;
   }
-  .hero-art img {
+  .hero-art > .hero-illustration {
     max-height: 430px;
-    object-fit: cover;
+    object-fit: contain;
   }
   .art-caption {
     left: 12px;
@@ -1058,27 +1060,6 @@ body {
 @media (max-width: 480px) {
   .form-grid {
     grid-template-columns: 1fr;
-  }
-}
-
-/* Decorative angel stays attached to the hero illustration. */
-.hero-art > .hero-angel {
-  position: absolute;
-  z-index: 1;
-  top: -24px;
-  right: -12px;
-  width: clamp(88px, 10vw, 136px);
-  height: auto;
-  max-height: none;
-  border-radius: 0;
-  object-fit: contain;
-  pointer-events: none;
-}
-@media (max-width: 720px) {
-  .hero-art > .hero-angel {
-    top: -16px;
-    right: 0;
-    width: 96px;
   }
 }
 
