@@ -34,6 +34,11 @@ export const testimonials = exampleNames.map((name, index) => ({
 }));
 export const services = [
   {
+    title: "Allgemeine Beratung",
+    Icon: Handshake,
+    text: "Integer tincidunt. Cras dapibus, vivamus elementum semper nisi. Aenean vulputate eleifend tellus.",
+  },
+  {
     title: "Erdbestattung",
     Icon: Leaf,
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae sapien ut libero venenatis faucibus.",
@@ -57,10 +62,5 @@ export const services = [
     title: "Trauerfeier",
     Icon: Heart,
     text: "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.",
-  },
-  {
-    title: "Allgemeine Beratung",
-    Icon: Handshake,
-    text: "Integer tincidunt. Cras dapibus, vivamus elementum semper nisi. Aenean vulputate eleifend tellus.",
   },
 ];
